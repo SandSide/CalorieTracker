@@ -14,31 +14,39 @@ namespace CalorieTrackerLibrary
 
         List<Food> foodList;
 
+        public List<Food> FoodList
+        {
+            get { return foodList; }
+            set { foodList = value; }
+        }
+
         public FoodGroup(string name)
         {
             this.name = name;
             foodList = new List<Food>();
+            Count = 1;
         }
 
-        public void AddFood(string foodName, int calories)
+        public void AddFood(Food food)
         {
-            foodList.Add(Factory.CreateFoodItem(foodName, calories));
+            if (food == null)
+                throw new NullReferenceException();
+     
+            foodList.Add(food);
         }
 
         public Food RemoveFood(string foodName)
         {
-            Food output = null;
-
             foreach(Food food in foodList)
             {
                 if (food.Name == foodName)
                 {
-                    output = food;
                     foodList.Remove(food);
+                    return food;
                 }   
             }
 
-            return output;
+            return null;
         }
 
         public void CalculateTotalCalories()
@@ -52,12 +60,13 @@ namespace CalorieTrackerLibrary
 
         public void Decrement()
         {
-            throw new NotImplementedException();
+            if(Count > 0)
+                Count--;
         }
 
         public void Increment()
         {
-            throw new NotImplementedException();
+            Count++;
         }
     }
 }

@@ -58,7 +58,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FoodItemTests.cs" />
+    <Compile Include="FoodGroup_Tests.cs" />
+    <Compile Include="FoodItem_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
