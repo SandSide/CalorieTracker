@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace CalorieTrackerLibrary
 {
-    public interface IIncrementalFood: IFood, IIncremental
+    public interface ICountable
     {
-        int TotalCalories { get; set; }
+        int Count { get; }
 
-        int CalculateTotalCalories(int calories, int count);
+        void Increment();
+
+        void Decrement();
+  
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CalorieTrackerLibrary
 {
-    public class Food : IIncrementalFood
+    public class Food : ICountableFood
     {
         public string Name { get; set; }
         public int Calories { get; set; }
@@ -49,6 +49,6 @@ namespace CalorieTrackerLibrary
             }
         }
 
-        public  int CalculateTotalCalories(int calories, int count) => calories * count;
+        public int CalculateTotalCalories(int calories, int count) => calories * count;
     }
 }
