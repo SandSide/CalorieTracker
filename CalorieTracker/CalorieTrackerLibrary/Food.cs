@@ -23,6 +23,7 @@ namespace CalorieTrackerLibrary
             Name = name;
             Calories = calories;
             Count = 1;
+            TotalCalories = CalculateTotalCalories(calories, Count);
         }
 
         public Food(string name, int calories, int count)

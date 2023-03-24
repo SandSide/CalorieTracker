@@ -78,8 +78,10 @@ namespace CalorieTrackerLibrary.Tests
         public void RemoveFood_ShouldWork()
         {
             FoodGroup temp = new FoodGroup("Breakfast");
+            Food toRemove = new Food("Sausage", 34);
+
             temp.AddFood(new Food("Apple", 34));
-            temp.AddFood(new Food("Sausage", 34));
+            temp.AddFood(toRemove);
 
             temp.RemoveFood("Sausage");
 
@@ -93,7 +95,32 @@ namespace CalorieTrackerLibrary.Tests
 
             // Assert
             Assert.Equal(expected, actual);
-   
+            Assert.Contains(toRemove, temp.FoodList);
+
+        }
+
+        [Fact]
+        public void RemoveFood_ShouldFail()
+        {
+            FoodGroup temp = new FoodGroup("Breakfast");
+           
+            Food toRemove = new Food("Sausage", 34);
+            temp.AddFood(new Food("Apple", 34));
+            temp.AddFood(toRemove);
+
+            var output = temp.RemoveFood("Banana");
+
+            // expected 
+            int expected = 2;
+
+
+            // Actual
+            int actual = temp.FoodList.Count;
+
+
+            // Assert
+            Assert.Equal(expected, actual);
+            Assert.Null(output);
         }
     }
 }
