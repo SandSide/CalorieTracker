@@ -10,7 +10,6 @@ namespace CalorieTrackerLibrary
     {
         public int Count {get; set;}   
         string name;
-        int totaCalories;
 
         List<Food> foodList;
 
@@ -49,13 +48,15 @@ namespace CalorieTrackerLibrary
             return null;
         }
 
-        public void CalculateTotalCalories()
+        public int CalculateTotalCalories()
         {
             int total = 0; ;
             foreach(var food in foodList)
             {
                 total += food.TotalCalories;
             }
+
+            return total * Count;
         }
 
         public void Decrement()

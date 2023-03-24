@@ -122,5 +122,99 @@ namespace CalorieTrackerLibrary.Tests
             Assert.Equal(expected, actual);
             Assert.Null(output);
         }
+
+        [Fact]
+        public void CalculateTotalCalories_ShouldWork()
+        {
+            FoodGroup temp = new FoodGroup("Breakfast");
+
+            temp.AddFood(new Food("Apple", 34));
+            temp.AddFood(new Food("Apple", 34));
+
+
+            // expected 
+            int expected = 68;
+
+
+            // Actual
+            int actual = temp.CalculateTotalCalories();
+
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void CalculateTotalCalories_Increment_ShouldWork()
+        {
+            FoodGroup temp = new FoodGroup("Breakfast");
+
+            temp.AddFood(new Food("Apple", 34));
+            temp.AddFood(new Food("Apple", 36));
+
+            temp.Increment();
+            temp.Increment();
+
+            // expected 
+            int expected = 70 * 3;
+
+
+            // Actual
+            int actual = temp.CalculateTotalCalories();
+
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void CalculateTotalCalories_Decrement_ShouldWork()
+        {
+            FoodGroup temp = new FoodGroup("Breakfast");
+
+            temp.AddFood(new Food("Apple", 34));
+            temp.AddFood(new Food("Apple", 36));
+
+            temp.Decrement();
+
+            // expected 
+            int expected = 0;
+
+
+            // Actual
+            int actual = temp.CalculateTotalCalories();
+
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
+
+
+        [Fact]
+        public void CalculateTotalCalories_MultipleDecrement_ShouldWork()
+        {
+            FoodGroup temp = new FoodGroup("Breakfast");
+
+            temp.AddFood(new Food("Apple", 34));
+            temp.AddFood(new Food("Apple", 36));
+
+            temp.Increment();
+            temp.Increment();
+            temp.Increment();
+            temp.Decrement();
+            temp.Decrement();
+
+            // expected 
+            int expected = 70 * 2;
+
+
+            // Actual
+            int actual = temp.CalculateTotalCalories();
+
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
+
     }
 }
