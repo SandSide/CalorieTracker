@@ -4,11 +4,42 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFUI"
+        xmlns:viewModel="clr-namespace:WPFUI.MVVM.ViewModel"
+        xmlns:view="clr-namespace:WPFUI.MVVM.View"
         mc:Ignorable="d"
         Title="Caloire Tracker" Height="450" Width="800">
+
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
+
     <Grid>
         <Grid.ColumnDefinitions>
-            
+
+            <ColumnDefinition Width="303*"/>
+            <ColumnDefinition Width="97*"/>
+
         </Grid.ColumnDefinitions>
+
+
+
+
+
+        <RadioButton
+            Content="Hello"
+            Height="50"
+            Width="50"
+            Background="Red"
+            Command="{Binding ChangeStringCommand}"
+           />
+
+        <Label
+            Content="{Binding TestString}" 
+            Margin="134,55,372,318"
+            Width="100"
+            Background="Green"/>
+
+
+
     </Grid>
 </Window>
