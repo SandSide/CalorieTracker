@@ -14,32 +14,42 @@
     </Window.DataContext>
 
     <Grid>
-        <Grid.ColumnDefinitions>
+        
+        <ItemsControl ItemsSource = "{Binding Path = foods}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
 
-            <ColumnDefinition Width="303*"/>
-            <ColumnDefinition Width="97*"/>
+                    <StackPanel Orientation = "Horizontal">
+                        <TextBox Text = "{Binding Path = Name, Mode = TwoWay}" 
+                        Width = "100" Margin = "3 5 3 5"/>
 
-        </Grid.ColumnDefinitions>
-
-
-
-
-
-        <RadioButton
-            Content="Hello"
-            Height="50"
-            Width="50"
-            Background="Red"
-            Command="{Binding ChangeStringCommand}"
-           />
-
-        <Label
-            Content="{Binding TestString}" 
-            Margin="134,55,372,318"
-            Width="100"
-            Background="Green"/>
+                        <TextBox Text = "{Binding Path = Calories, Mode = TwoWay}" 
+                        Width = "100" Margin = "0 5 3 5"/>
 
 
+                        <Button Command="{Binding Increment}"
+                                Width="15"
+                                Height="15"
+                                Margin="5"/>
 
+                        <TextBox Text = "{Binding Path = Count, Mode = TwoWay}" 
+                            Width = "25" Margin = "0 5 3 5"
+                                 Padding="1"
+                                 TextAlignment="Center"/>
+
+                        <Button Command="{Binding IncrementCommand}"
+                                Width="15"
+                                Height="15"
+                                Margin="5"/>
+
+                        <TextBox Text = "{Binding Path = TotalCalories, Mode = OneWay}" 
+                        Width = "100" Margin = "0 5 3 5"/>
+
+
+                    </StackPanel>
+
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </Window>

@@ -1,24 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Input;
 using WPFUI.Core;
+using WPFUI.MVVM.Model;
 
 namespace WPFUI.MVVM.ViewModel
 {
     internal class MainViewModel : ObservableObject
     {
 
-        public RelayCommand ChangeStringCommand { get; set; }
-
         public HomeViewModel HomeVM { get; set; }
 		
-
         private object _currentView;
 
-		public object CurrentView
+        public ObservableCollection<FoodModel> foods
+        {
+            get;
+            set;
+        }
+
+        public RelayCommand IncrementCommand { get; set; }
+
+
+
+        public object CurrentView
 		{
 			get { return _currentView; }
 			set 
@@ -28,28 +38,24 @@ namespace WPFUI.MVVM.ViewModel
 			}
 		}
 
-		private string testString;
-
-		public string TestString
-        {
-			get { return testString; }
-			set 
-			{ 
-				testString = value;
-                OnPropertyChanged();
-            }
-		}
 
         public MainViewModel() 
 		{ 
 			HomeVM = new HomeViewModel();
 			CurrentView = HomeVM;
 
-            TestString = "Hello World!";
+            foods = new ObservableCollection<FoodModel>()
+            {
+                new FoodModel("Orange", 51, 1),
+                new FoodModel("Apple", 51, 4),
+                new FoodModel("Soda", 51, 1),
+                new FoodModel("Crisps", 51, 1)
+            };
 
-			ChangeStringCommand = new RelayCommand(o => 
-			{
-				TestString = "Die";
+            IncrementCommand = new RelayCommand(o =>
+            {
+                FoodModel temp = (FoodModel)o;
+                temp.Increment();
             });
         }
     }

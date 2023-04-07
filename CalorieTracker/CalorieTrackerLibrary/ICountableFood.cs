@@ -8,8 +8,7 @@ namespace CalorieTrackerLibrary
 {
     public interface ICountableFood: IFood, ICountable
     {
-        int TotalCalories { get; set; }
+        int TotalCalories { get; }
 
-        int CalculateTotalCalories(int calories, int count);
     }
 }

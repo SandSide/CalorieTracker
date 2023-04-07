@@ -75,6 +75,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MVVM\Model\FoodModel.cs" />
     <Compile Include="MVVM\ViewModel\HomeViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
     <Compile Include="MVVM\View\HomeView.xaml.cs">
@@ -106,7 +107,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="MVVM\Model\" />
+    <ProjectReference Include="..\CalorieTrackerLibrary\CalorieTrackerLibrary.csproj">
+      <Project>{a313b1ef-d28e-40a4-b757-1f2b213ec5e2}</Project>
+      <Name>CalorieTrackerLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
