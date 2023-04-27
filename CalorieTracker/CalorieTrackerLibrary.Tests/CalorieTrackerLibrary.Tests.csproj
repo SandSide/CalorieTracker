@@ -10,8 +10,8 @@
     <ProjectGuid>{57552BF0-FE40-48CA-9C53-8AE710973698}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CalorieTrackerLibrary.Tests</RootNamespace>
-    <AssemblyName>CalorieTrackerLibrary.Tests</AssemblyName>
+    <RootNamespace>CalorieTrackerLibrary</RootNamespace>
+    <AssemblyName>CalorieTrackerLibrary</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -58,7 +58,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FoodItemTests.cs" />
+    <Compile Include="FoodGroup_Tests.cs" />
+    <Compile Include="FoodItem_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

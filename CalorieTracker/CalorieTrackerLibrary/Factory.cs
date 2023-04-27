@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace CalorieTrackerLibrary
 {
-    public interface IIncremental
+    public static class Factory
     {
-        int Count { get; }
 
-        void Increment();
-        void Decrement();
+        public static Food CreateFoodItem(string name, int calories)
+        {
+            return new Food(name, calories);
+        }
 
     }
 }

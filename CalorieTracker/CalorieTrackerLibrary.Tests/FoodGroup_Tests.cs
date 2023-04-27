@@ -1,0 +1,220 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Xunit;
+using CalorieTrackerLibrary;
+
+namespace CalorieTrackerLibrary.Tests
+{
+    public class FoodGroup_Tests
+    {
+
+        [Fact]
+        public void Increment_ShouldIncrement()
+        {
+
+            FoodGroup temp = new FoodGroup("Breakfast");
+            temp.Increment();
+
+    
+            // expected 
+            int expected = 1;
+
+
+            // Actual
+            int actual = temp.Count;
+
+
+            // Assert
+            Assert.Equal(expected, actual);
+
+        }
+
+        [Fact]
+        public void Decrement_ShouldDecrement()
+        {
+
+            FoodGroup temp = new FoodGroup("Breakfast");
+            temp.AddFood(new Food("Apple", 45));
+            temp.Decrement();
+
+            // expected 
+            int expected = 0;
+
+
+            // Actual
+            int actual = temp.Count;
+
+
+            // Assert
+            Assert.Equal(expected, actual);
+
+        }
+
+        [Fact]
+        public void AddFood_ShouldWork()
+        {
+            FoodGroup temp = new FoodGroup("Breakfast");
+            temp.AddFood(new Food("Apple", 34));
+            temp.AddFood(new Food("Apple", 34));
+
+            // expected 
+            int expected = 2;
+
+
+            // Actual
+            int actual = temp.FoodList.Count;
+
+
+            // Assert
+            Assert.Equal(expected, actual);
+
+        }
+
+
+        [Fact]
+        public void RemoveFood_ShouldWork()
+        {
+            FoodGroup temp = new FoodGroup("Breakfast");
+            Food toRemove = new Food("Sausage", 34);
+
+            temp.AddFood(new Food("Apple", 34));
+            temp.AddFood(toRemove);
+
+            temp.RemoveFood("Sausage");
+
+            // expected 
+            int expected = 1;
+
+
+            // Actual
+            int actual = temp.FoodList.Count;
+
+
+            // Assert
+            Assert.Equal(expected, actual);
+            Assert.Contains(toRemove, temp.FoodList);
+
+        }
+
+        [Fact]
+        public void RemoveFood_ShouldFail()
+        {
+            FoodGroup temp = new FoodGroup("Breakfast");
+           
+            Food toRemove = new Food("Sausage", 34);
+            temp.AddFood(new Food("Apple", 34));
+            temp.AddFood(toRemove);
+
+            var output = temp.RemoveFood("Banana");
+
+            // expected 
+            int expected = 2;
+
+
+            // Actual
+            int actual = temp.FoodList.Count;
+
+
+            // Assert
+            Assert.Equal(expected, actual);
+            Assert.Null(output);
+        }
+
+        [Fact]
+        public void CalculateTotalCalories_ShouldWork()
+        {
+            FoodGroup temp = new FoodGroup("Breakfast");
+
+            temp.AddFood(new Food("Apple", 34));
+            temp.AddFood(new Food("Apple", 34));
+
+
+            // expected 
+            int expected = 68;
+
+
+            // Actual
+            int actual = temp.CalculateTotalCalories();
+
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void CalculateTotalCalories_Increment_ShouldWork()
+        {
+            FoodGroup temp = new FoodGroup("Breakfast");
+
+            temp.AddFood(new Food("Apple", 34));
+            temp.AddFood(new Food("Apple", 36));
+
+            temp.Increment();
+            temp.Increment();
+
+            // expected 
+            int expected = 70 * 3;
+
+
+            // Actual
+            int actual = temp.CalculateTotalCalories();
+
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void CalculateTotalCalories_Decrement_ShouldWork()
+        {
+            FoodGroup temp = new FoodGroup("Breakfast");
+
+            temp.AddFood(new Food("Apple", 34));
+            temp.AddFood(new Food("Apple", 36));
+
+            temp.Decrement();
+
+            // expected 
+            int expected = 0;
+
+
+            // Actual
+            int actual = temp.CalculateTotalCalories();
+
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
+
+
+        [Fact]
+        public void CalculateTotalCalories_MultipleDecrement_ShouldWork()
+        {
+            FoodGroup temp = new FoodGroup("Breakfast");
+
+            temp.AddFood(new Food("Apple", 34));
+            temp.AddFood(new Food("Apple", 36));
+
+            temp.Increment();
+            temp.Increment();
+            temp.Increment();
+            temp.Decrement();
+            temp.Decrement();
+
+            // expected 
+            int expected = 70 * 2;
+
+
+            // Actual
+            int actual = temp.CalculateTotalCalories();
+
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
+
+    }
+}

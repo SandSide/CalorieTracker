@@ -8,7 +8,7 @@ using CalorieTrackerLibrary;
 
 namespace CalorieTrackerLibrary.Tests
 {
-    public class FoodItemTests
+    public class FoodItem_Tests
     {
 
         [Theory]
