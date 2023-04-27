@@ -8,7 +8,7 @@ using CalorieTrackerLibrary;
 
 namespace WPFUI.MVVM.Model
 {
-    internal class FoodModel : ObservableObject, ICountableFood
+    internal class FoodItemModel : ICountableFood
     {
 
         public string name;
@@ -20,8 +20,7 @@ namespace WPFUI.MVVM.Model
             get { return name; }
             set
             {
-                name = value;
-                OnPropertyChanged();
+                  name = value;
             }
         }
 
@@ -31,8 +30,6 @@ namespace WPFUI.MVVM.Model
             set
             {
                 calories = value;
-                OnPropertyChanged();
-                OnPropertyChanged("TotalCalories");
             }
         }
 
@@ -47,13 +44,11 @@ namespace WPFUI.MVVM.Model
             set
             {
                 count = value;
-                OnPropertyChanged();
-                OnPropertyChanged("TotalCalories");
             }
         }
 
 
-        public FoodModel(string name, int calories, int count)
+        public FoodItemModel(string name, int calories, int count)
         {
             Name = name;
             Calories = calories;
