@@ -22,12 +22,33 @@ namespace WPFUI.MVVM.ViewModel
             {
                 _foodItems = value;
                 OnPropertyChanged();
+                OnPropertyChanged("TotalCalories");
+
             }
         }
+
+        private int _totalCalories;
 
         public int TotalCalories
         {
             get { return FoodItems.Sum(item => item.Calories * item.Count); }
+        }
+
+        private DateTime _date;
+
+        public string DateString
+        {
+            get { return _date.ToString("dd-MM-yy");}
+        }
+
+        public DateTime Date
+        {
+            get { return _date; }
+            set 
+            { 
+                _date = value;
+                OnPropertyChanged("DateString");
+            }
         }
 
 
@@ -40,6 +61,8 @@ namespace WPFUI.MVVM.ViewModel
                 new FoodItemModel("Crisps", 130, 1),
                 new FoodItemModel("Apple", 45, 1)
             };
+
+            Date = DateTime.Today;
         }
 
         public int CalculateTotalCalories()

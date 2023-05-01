@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace WPFUI.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for HomeView.xaml
+    /// Interaction logic for CalorieIntakeView.xaml
     /// </summary>
-    public partial class HomeView : UserControl
+    public partial class CalorieIntakeView : UserControl
     {
-        public HomeView()
+        public CalorieIntakeView()
         {
             InitializeComponent();
         }
