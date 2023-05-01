@@ -83,11 +83,14 @@
 
             <StackPanel Orientation="Horizontal">
 
+                <Button Content="Calculate"
+                        Command="{Binding CalcualteTotalCaloriesCommand}"/>
+
                 <TextBlock Text="Total Calories:"
                            FontSize="18"         
                            Margin = "0 0 5 0"/>
 
-                <TextBlock Text="{Binding Path = TotalCalories}"
+                <TextBlock Text="{Binding TotalCalories}"
                            Width="100"
                            FontSize="24"
                            Margin = "0 0 0 0"/>

@@ -22,12 +22,8 @@ namespace WPFUI.MVVM.ViewModel
             {
                 _foodItems = value;
                 OnPropertyChanged();
-                OnPropertyChanged("TotalCalories");
-
             }
         }
-
-        private int _totalCalories;
 
         public int TotalCalories
         {
@@ -51,6 +47,7 @@ namespace WPFUI.MVVM.ViewModel
             }
         }
 
+        public RelayCommand CalcualteTotalCaloriesCommand { get; set; }
 
         public FoodItemsViewModel()
         {
@@ -63,19 +60,12 @@ namespace WPFUI.MVVM.ViewModel
             };
 
             Date = DateTime.Today;
-        }
 
-        public int CalculateTotalCalories()
-        {
-
-            int total = 0;
-
-            foreach(var food in FoodItems)
+            CalcualteTotalCaloriesCommand = new RelayCommand(o =>
             {
-                total += food.TotalCalories;
-            }
+                OnPropertyChanged("TotalCalories");
+            });
 
-            return total;
         }
     }
 }

@@ -30,11 +30,11 @@ namespace WPFUI.MVVM.ViewModel
 		}
 
 
-
 		public MainViewModel() 
 		{
 			FoodItemsVM = new FoodItemsViewModel();
 			CurrentView = FoodItemsVM;
+
 
         }
     }
