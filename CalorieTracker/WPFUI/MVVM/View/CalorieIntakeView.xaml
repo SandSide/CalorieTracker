@@ -54,26 +54,26 @@
                         <StackPanel Orientation = "Horizontal">
 
                             <TextBox Text = "{Binding Path = Name, Mode = TwoWay}" 
-                                        Width = "100" 
-                                        Margin = "3 5 3 5"/>
+                                     Width = "100" 
+                                     Margin = "3 5 3 5"/>
 
                             <TextBox Text = "{Binding Path = Calories, Mode = TwoWay}" 
-                                        Width = "50" 
-                                        Margin = "0 5 3 5"/>
+                                     Width = "50" 
+                                     Margin = "0 5 3 5"/>
 
                             <TextBox Text = "{Binding Path = Count, Mode = TwoWay}" 
-                                        Width = "25" Margin = "0 5 3 5"
-                                        Padding="1"
-                                        TextAlignment="Center"/>
+                                     Width = "25" Margin = "0 5 3 5"
+                                     Padding="1"
+                                     TextAlignment="Center"/>
 
                             <TextBox Text = "{Binding Path = TotalCalories, Mode = OneWay}" 
-                                        Width = "50" 
+                                     Width = "50" 
                                      Background="Orange"
                                      BorderThickness="0"
                                      TextAlignment="Center"
-                                        Margin = "0 5 3 5"/>
+                                     Margin = "0 5 3 5"/>
 
-                            <Button Content="Delete" Command="{Binding DeleteFoodItemCommand}" CommandParameter="{Binding}" />
+                            <Button Content="Delete" Command="{Binding RemoveFoodItemCommand}" />
 
                         </StackPanel>
 
@@ -81,11 +81,12 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
 
+            <Button Width="100"
+                    Height="25"
+                    Content="Add"
+                    Command="{Binding AddNewFoodItemCommand}"/>
+
             <StackPanel Orientation="Horizontal">
-
-                <Button Content="Calculate"
-                        Command="{Binding CalcualteTotalCaloriesCommand}"/>
-
                 <TextBlock Text="Total Calories:"
                            FontSize="18"         
                            Margin = "0 0 5 0"/>
@@ -97,6 +98,17 @@
 
             </StackPanel>
 
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Test:"
+                           FontSize="18"         
+                           Margin = "0 0 5 0"/>
+
+                <TextBlock Text="{Binding TestString}"
+                           Width="100"
+                           FontSize="24"
+                           Margin = "0 0 0 0"/>
+
+            </StackPanel>
         </StackPanel>
     </Border>
 </UserControl>

@@ -63,6 +63,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Core\IMediator.cs" />
+    <Compile Include="Core\Mediator.cs" />
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -77,6 +79,7 @@
   <ItemGroup>
     <Compile Include="MVVM\Model\FoodItemModel.cs" />
     <Compile Include="MVVM\ViewModel\FoodItemsViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\FoodItemViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
     <Compile Include="MVVM\View\CalorieIntakeView.xaml.cs">
       <DependentUpon>CalorieIntakeView.xaml</DependentUpon>

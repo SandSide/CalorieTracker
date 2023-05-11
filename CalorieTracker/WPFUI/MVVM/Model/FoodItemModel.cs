@@ -47,6 +47,12 @@ namespace WPFUI.MVVM.Model
             }
         }
 
+        public FoodItemModel()
+        {
+            Name = string.Empty;
+            Calories = 0;
+            Count = 0; 
+        }
 
         public FoodItemModel(string name, int calories, int count)
         {

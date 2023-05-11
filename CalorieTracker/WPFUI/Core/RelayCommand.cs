@@ -35,5 +35,6 @@ namespace WPFUI.Core
         {
             _execute(parameter);
         }
+
     }
 }

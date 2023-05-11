@@ -14,10 +14,20 @@ namespace WPFUI.MVVM.ViewModel
 {
     internal class MainViewModel : ObservableObject
     {
+		private static MainViewModel _instance;
+		
+		public static MainViewModel Instance
+		{
+			get
+			{
+				return _instance;
+			}
+		}
 
-		private object _currentView;
 
-        public FoodItemsViewModel FoodItemsVM  { get; set; }
+        private object _currentView;
+
+        public static FoodItemsViewModel FoodItemsVM  { get; set; }
 
         public object CurrentView
 		{
@@ -32,10 +42,10 @@ namespace WPFUI.MVVM.ViewModel
 
 		public MainViewModel() 
 		{
+            _instance = this;
+
 			FoodItemsVM = new FoodItemsViewModel();
 			CurrentView = FoodItemsVM;
-
-
         }
     }
 }

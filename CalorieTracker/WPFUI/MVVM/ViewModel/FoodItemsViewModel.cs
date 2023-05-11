@@ -13,15 +13,15 @@ namespace WPFUI.MVVM.ViewModel
     internal class FoodItemsViewModel : ObservableObject
     {
 
-        private ObservableCollection<FoodItemModel> _foodItems;
+        private ObservableCollection<FoodItemViewModel> _foodItems;
 
-        public ObservableCollection<FoodItemModel> FoodItems
+        public ObservableCollection<FoodItemViewModel> FoodItems
         {
             get { return _foodItems; }
             set
             {
                 _foodItems = value;
-                OnPropertyChanged();
+                OnPropertyChanged("TotalCalories");
             }
         }
 
@@ -47,25 +47,47 @@ namespace WPFUI.MVVM.ViewModel
             }
         }
 
-        public RelayCommand CalcualteTotalCaloriesCommand { get; set; }
+        public void RaisePropertyTotalCaloriesChanged(object sender, EventArgs e)
+        {
+            OnPropertyChanged("TotalCalories");
+            TestString = "TC Raised";
+        }
+
+        public RelayCommand AddNewFoodItemCommand { get; set; }
+
+        private string testString;
+
+        public string TestString
+        {
+            get { return testString; }
+            set 
+            { 
+                testString = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public RelayCommand RemoveFoodItemCommand { get; set; }
+
 
         public FoodItemsViewModel()
         {
-            FoodItems = new ObservableCollection<FoodItemModel>
+            FoodItems = new ObservableCollection<FoodItemViewModel>
             {
-                new FoodItemModel("Banana", 90, 1),
-                new FoodItemModel("Chocolate", 143, 1),
-                new FoodItemModel("Crisps", 130, 1),
-                new FoodItemModel("Apple", 45, 1)
+                new FoodItemViewModel(new FoodItemModel("Banana", 90, 1)),
+                new FoodItemViewModel(new FoodItemModel("Chocolate", 901, 1)),
+                new FoodItemViewModel(new FoodItemModel("Apple", 45, 2))
             };
 
             Date = DateTime.Today;
 
-            CalcualteTotalCaloriesCommand = new RelayCommand(o =>
+            AddNewFoodItemCommand = new RelayCommand(o =>
             {
-                OnPropertyChanged("TotalCalories");
+                FoodItems.Add(new FoodItemViewModel(new FoodItemModel()));
             });
 
+
+            Mediator.Instance.MessageReceived += RaisePropertyTotalCaloriesChanged;
         }
     }
 }
