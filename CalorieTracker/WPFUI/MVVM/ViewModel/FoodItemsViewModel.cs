@@ -34,7 +34,7 @@ namespace WPFUI.MVVM.ViewModel
 
         public string DateString
         {
-            get { return _date.ToString("dd-MM-yy");}
+            get { return _date.ToString("dd MMM");}
         }
 
         public DateTime Date
@@ -47,10 +47,13 @@ namespace WPFUI.MVVM.ViewModel
             }
         }
 
-        public void RaisePropertyTotalCaloriesChanged(object sender, EventArgs e)
+        public void RaisePropertyChanged(object sender, string msg)
         {
-            OnPropertyChanged("TotalCalories");
-            TestString = "TC Raised";
+            if (msg == "TotalCalories")
+                OnPropertyChanged(nameof(TotalCalories));
+            else if (msg == "RemoveFoodItem")
+                RemoveFoodItem(sender);
+
         }
 
         public RelayCommand AddNewFoodItemCommand { get; set; }
@@ -67,8 +70,13 @@ namespace WPFUI.MVVM.ViewModel
             }
         }
 
-        public RelayCommand RemoveFoodItemCommand { get; set; }
 
+        public void RemoveFoodItem(object foodItem)
+        {
+            FoodItems.Remove((FoodItemViewModel) foodItem);
+            OnPropertyChanged(nameof(FoodItems));
+            OnPropertyChanged(nameof(TotalCalories));
+        }
 
         public FoodItemsViewModel()
         {
@@ -84,10 +92,11 @@ namespace WPFUI.MVVM.ViewModel
             AddNewFoodItemCommand = new RelayCommand(o =>
             {
                 FoodItems.Add(new FoodItemViewModel(new FoodItemModel()));
+                OnPropertyChanged(nameof(FoodItems));
             });
 
 
-            Mediator.Instance.MessageReceived += RaisePropertyTotalCaloriesChanged;
+            Mediator.Instance.MessageReceived += RaisePropertyChanged;
         }
     }
 }

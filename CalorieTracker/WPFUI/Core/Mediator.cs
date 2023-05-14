@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WPFUI.Core
 {
-    internal class Mediator
+    internal class Mediator : IMediator
     {
         private static readonly Mediator instance = new Mediator();
 
@@ -19,11 +19,11 @@ namespace WPFUI.Core
         {
         }
 
-        public event EventHandler<EventArgs> MessageReceived;
+        public event EventHandler<string> MessageReceived;
 
-        public void SendMessage(object sender, EventArgs args)
+        public void SendMessage(object sender, string message)
         {
-            MessageReceived?.Invoke(sender, args);
+            MessageReceived?.Invoke(sender, message);
         }
     }
 }

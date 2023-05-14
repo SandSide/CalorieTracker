@@ -31,7 +31,7 @@ namespace WPFUI.MVVM.ViewModel
                 _foodItemModel.Calories = value;
                 OnPropertyChanged();
                 OnPropertyChanged("TotalCalories");
-                Mediator.Instance.SendMessage(this, EventArgs.Empty);
+                Mediator.Instance.SendMessage(this, "TotalCalories");
             }
         }
 
@@ -43,7 +43,7 @@ namespace WPFUI.MVVM.ViewModel
                 _foodItemModel.count = value; 
                 OnPropertyChanged();
                 OnPropertyChanged("TotalCalories");
-                Mediator.Instance.SendMessage(this, EventArgs.Empty);
+                Mediator.Instance.SendMessage(this, "TotalCalories");
             }
         }
 
@@ -62,7 +62,7 @@ namespace WPFUI.MVVM.ViewModel
             RemoveFoodItemCommand = new RelayCommand(o =>
             {
                 //Remove Obj
-                Mediator.Instance.SendMessage(this, EventArgs.);
+                Mediator.Instance.SendMessage(this, "RemoveFoodItem");
             });
         }
     }
