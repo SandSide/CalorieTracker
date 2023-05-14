@@ -10,6 +10,10 @@ using WPFUI.MVVM.Model;
 
 namespace WPFUI.MVVM.ViewModel
 {
+
+    /// <summary>
+    ///  This class stores and manages todays eaten food itmes. Calcualtes total calories. Allows one to add/remove food items in the list.
+    /// </summary>
     internal class FoodItemsViewModel : ObservableObject
     {
 
@@ -25,6 +29,12 @@ namespace WPFUI.MVVM.ViewModel
             }
         }
 
+        /// <summary>
+        /// Calcualtes and returns the total calories
+        /// </summary>
+        /// <returns>
+        /// Combined total calories of all food items
+        /// </returns>
         public int TotalCalories
         {
             get { return FoodItems.Sum(item => item.Calories * item.Count); }
@@ -32,6 +42,13 @@ namespace WPFUI.MVVM.ViewModel
 
         private DateTime _date;
 
+
+        /// <summary>
+        /// Date in  string format
+        /// </summary>
+        /// <returns>
+        /// Formated date string
+        /// </returns>
         public string DateString
         {
             get { return _date.ToString("dd MMM");}
@@ -47,32 +64,39 @@ namespace WPFUI.MVVM.ViewModel
             }
         }
 
-        public void RaisePropertyChanged(object sender, string msg)
+        /// <summary>
+        /// Handles Messages recieved from Mediator
+        /// </summary>
+        /// <param name="sender">
+        /// Sender of the message
+        /// </param>
+        /// <param name="msg">
+        /// Message recieved
+        /// </param>
+        public void OnMessageRecieved (object sender, string msg)
         {
             if (msg == "TotalCalories")
                 OnPropertyChanged(nameof(TotalCalories));
             else if (msg == "RemoveFoodItem")
                 RemoveFoodItem(sender);
-
         }
 
+  
         public RelayCommand AddNewFoodItemCommand { get; set; }
 
-        private string testString;
 
-        public string TestString
-        {
-            get { return testString; }
-            set 
-            { 
-                testString = value;
-                OnPropertyChanged();
-            }
-        }
-
-
+        /// <summary>
+        /// Remove Food Item from the list
+        /// </summary>
+        /// <param name="foodItem">
+        /// Food Item to Delete
+        /// </param>
         public void RemoveFoodItem(object foodItem)
         {
+            // Check if it contains the food item
+            if (!FoodItems.Contains((FoodItemViewModel)foodItem))
+                return;
+
             FoodItems.Remove((FoodItemViewModel) foodItem);
             OnPropertyChanged(nameof(FoodItems));
             OnPropertyChanged(nameof(TotalCalories));
@@ -89,6 +113,7 @@ namespace WPFUI.MVVM.ViewModel
 
             Date = DateTime.Today;
 
+            // Add new Food Item Command
             AddNewFoodItemCommand = new RelayCommand(o =>
             {
                 FoodItems.Add(new FoodItemViewModel(new FoodItemModel()));
@@ -96,7 +121,7 @@ namespace WPFUI.MVVM.ViewModel
             });
 
 
-            Mediator.Instance.MessageReceived += RaisePropertyChanged;
+            Mediator.Instance.MessageReceived += OnMessageRecieved;
         }
     }
 }

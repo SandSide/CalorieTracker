@@ -59,9 +59,10 @@ namespace WPFUI.MVVM.ViewModel
             _foodItemModel = food;
             OnPropertyChanged();
 
+            // Remove this FoodItem from list command
             RemoveFoodItemCommand = new RelayCommand(o =>
             {
-                //Remove Obj
+                // Send message to remove this food item
                 Mediator.Instance.SendMessage(this, "RemoveFoodItem");
             });
         }
