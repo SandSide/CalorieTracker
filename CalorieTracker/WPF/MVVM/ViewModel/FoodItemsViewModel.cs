@@ -130,7 +130,7 @@ namespace WPF.MVVM.ViewModel
                 OnPropertyChanged(nameof(FoodItems));
             });
 
-/*            DataSaver.SaveData("Test.txt", (Enumerable)FoodItems);*/
+            DataSaver.SaveData("Test.json", FoodItems, _date);
 
 
             Mediator.Instance.MessageReceived += OnMessageRecieved;

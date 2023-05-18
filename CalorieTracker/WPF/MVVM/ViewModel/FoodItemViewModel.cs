@@ -13,6 +13,11 @@ namespace WPF.MVVM.ViewModel
 
         private FoodItemModel _foodItemModel;
 
+        public FoodItemModel FoodItemModel
+        {
+            get { return _foodItemModel; }
+        }
+
         public string Name 
         {
             get { return _foodItemModel.Name; }
