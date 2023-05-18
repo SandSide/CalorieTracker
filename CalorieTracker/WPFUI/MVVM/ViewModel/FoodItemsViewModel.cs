@@ -102,6 +102,16 @@ namespace WPFUI.MVVM.ViewModel
             OnPropertyChanged(nameof(TotalCalories));
         }
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            // Cancel the closure
+            e.Cancel = true;
+
+            DataSaver.SaveData("Test.txt");
+
+            e.Cancel = false;
+        }
+
         public FoodItemsViewModel()
         {
             FoodItems = new ObservableCollection<FoodItemViewModel>
@@ -119,6 +129,8 @@ namespace WPFUI.MVVM.ViewModel
                 FoodItems.Add(new FoodItemViewModel(new FoodItemModel()));
                 OnPropertyChanged(nameof(FoodItems));
             });
+
+            DataSaver.SaveData("Test.txt", (Enumerable)FoodItems);
 
 
             Mediator.Instance.MessageReceived += OnMessageRecieved;
