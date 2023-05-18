@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using WPFUI.Core;
-using WPFUI.MVVM.Model;
+using WPF.Core;
+using WPF.MVVM.Model;
 
-namespace WPFUI.MVVM.ViewModel
+namespace WPF.MVVM.ViewModel
 {
 
     /// <summary>
@@ -107,7 +107,7 @@ namespace WPFUI.MVVM.ViewModel
             // Cancel the closure
             e.Cancel = true;
 
-            DataSaver.SaveData("Test.txt");
+       /*     DataSaver.SaveData("Test.txt");*/
 
             e.Cancel = false;
         }
@@ -130,7 +130,7 @@ namespace WPFUI.MVVM.ViewModel
                 OnPropertyChanged(nameof(FoodItems));
             });
 
-          /*  DataSaver.SaveData("Test.txt", (Enumerable)FoodItems);*/
+/*            DataSaver.SaveData("Test.txt", (Enumerable)FoodItems);*/
 
 
             Mediator.Instance.MessageReceived += OnMessageRecieved;

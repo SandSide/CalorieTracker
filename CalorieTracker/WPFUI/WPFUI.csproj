@@ -63,6 +63,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Core\DataConverter.cs" />
     <Compile Include="Core\DataSaver.cs" />
     <Compile Include="Core\IMediator.cs" />
     <Compile Include="Core\Mediator.cs" />
@@ -109,12 +110,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CalorieTrackerLibrary\CalorieTrackerLibrary.csproj">
-      <Project>{a313b1ef-d28e-40a4-b757-1f2b213ec5e2}</Project>
-      <Name>CalorieTrackerLibrary</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
