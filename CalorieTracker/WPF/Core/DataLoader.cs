@@ -25,13 +25,13 @@ namespace WPF.Core
         public static List<FoodItemModel> Load(string filename) 
         {
             
-            List<DayFoodIntake> dailyIntakeEntries = LoadAllEntries(filename);
+            List<DaysFoodIntake> dailyIntakeEntries = LoadAllEntries(filename);
 
             // Find food entry for todays date
             foreach (var day in dailyIntakeEntries)
             {
-                if(day.date.ToString("dd mm yyyy") == DateTime.Today.ToString("dd mm yyyy"))
-                    return day.foodItems;
+                if(day.Date.ToString("dd mm yyyy") == DateTime.Today.ToString("dd mm yyyy"))
+                    return day.FoodItems;
  
             }
 
@@ -47,7 +47,7 @@ namespace WPF.Core
         /// <returns>
         /// List of FoodIntake for each day
         /// </returns>
-        public static List<DayFoodIntake> LoadAllEntries(string filename)
+        public static List<DaysFoodIntake> LoadAllEntries(string filename)
         {
             // Get filepath
             string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -58,7 +58,7 @@ namespace WPF.Core
             var json = sr.ReadToEnd();
 
             // Convert Entires to list
-            List<DayFoodIntake> dailyIntake = JsonConvert.DeserializeObject<List<DayFoodIntake>>(json);
+            List<DaysFoodIntake> dailyIntake = JsonConvert.DeserializeObject<List<DaysFoodIntake>>(json);
 
             return dailyIntake;
         }

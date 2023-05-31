@@ -133,9 +133,6 @@ namespace WPF.MVVM.ViewModel
 
         public FoodItemsViewModel()
         {
-
-            //Testing();
-
             Load();
 
             Date = DateTime.Today;
@@ -155,10 +152,7 @@ namespace WPF.MVVM.ViewModel
         {
             FoodItems = new ObservableCollection<FoodItemViewModel>
             {
-                new FoodItemViewModel(new FoodItemModel("Avacado", 90, 1)),
-                new FoodItemViewModel(new FoodItemModel("Chocolate", 901, 1)),
-                new FoodItemViewModel(new FoodItemModel("Apple", 45, 2)),
-                new FoodItemViewModel(new FoodItemModel("Crisps", 750, 2))
+                new FoodItemViewModel(new FoodItemModel("Naruto", 90, 1)),
             };
 
             DataSaver.SaveData("Test.json", FoodItems);

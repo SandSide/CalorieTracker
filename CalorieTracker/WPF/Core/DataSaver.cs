@@ -17,24 +17,31 @@ namespace WPF.Core
         {
 
             string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
-            List<FoodItemModel> foodModels = foodItems.Select(o => o.FoodItemModel).ToList();
-
             string path = Path.Combine(docPath, filename);
 
-            DayFoodIntake temp = new DayFoodIntake(DateTime.Today, foodModels);
+            List<FoodItemModel> foodModels = foodItems.Select(o => o.FoodItemModel).ToList();
+            List<DaysFoodIntake> dailyIntakeEntries = DataLoader.LoadAllEntries(filename);
 
-            
-            
-            List<DayFoodIntake> list = new List<DayFoodIntake> { temp };
+            bool updated = false;
 
-            var json = JsonSerializer.Serialize(list);
+            // Find food entry for todays date
+            foreach (var day in dailyIntakeEntries)
+            {
+                if (day.Date.ToString("dd mm yyyy") == DateTime.Today.ToString("dd mm yyyy"))
+                {
+                    day.FoodItems = foodModels;
+                    updated = true;
+                    break;
+                }
+            }
+
+            if (!updated)
+                dailyIntakeEntries.Add(new DaysFoodIntake(DateTime.Today, foodModels));
+
+
+            var json = JsonSerializer.Serialize(dailyIntakeEntries);
             File.WriteAllText(path, json);
         }
 
-        public record class DayFoodIntake(
-            DateTime date,
-            List<FoodItemModel> foodItems
-            );
     }
 }
