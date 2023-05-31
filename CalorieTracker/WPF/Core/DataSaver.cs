@@ -13,7 +13,7 @@ namespace WPF.Core
 {
     internal static class DataSaver
     {
-        public static void SaveData(string filename, ObservableCollection<FoodItemViewModel> foodItems, DateTime date)
+        public static void SaveData(string filename, ObservableCollection<FoodItemViewModel> foodItems)
         {
 
             string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -22,18 +22,17 @@ namespace WPF.Core
 
             string path = Path.Combine(docPath, filename);
 
-/*            if (!File.Exists(path))
-            {*/
+            DayFoodIntake temp = new DayFoodIntake(DateTime.Today, foodModels);
 
-                using(StreamWriter sw = File.AppendText(path))
-                {
-                    var json = JsonSerializer.Serialize(new { date, foodModels });
-                    sw.WriteLine(json);
-                }
+            List<DayFoodIntake> list = new List<DayFoodIntake> { temp };
 
-/*            }*/
-
+            var json = JsonSerializer.Serialize(list);
+            File.WriteAllText(path, json);
         }
-    }
 
+        public record class DayFoodIntake(
+            DateTime date,
+            List<FoodItemModel> foodItems
+            );
+    }
 }

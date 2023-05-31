@@ -112,14 +112,31 @@ namespace WPF.MVVM.ViewModel
             e.Cancel = false;
         }
 
+        public void Load()
+        {
+
+            var data = DataLoader.Load("Test.json");
+            FoodItems = new ObservableCollection<FoodItemViewModel>();
+
+            if(data != null)
+            {
+                foreach(FoodItemModel food in data)
+                {
+                    FoodItems.Add(new FoodItemViewModel(food));
+                }
+            }
+            else
+                FoodItems = new ObservableCollection<FoodItemViewModel>();
+
+
+        }
+
         public FoodItemsViewModel()
         {
-            FoodItems = new ObservableCollection<FoodItemViewModel>
-            {
-                new FoodItemViewModel(new FoodItemModel("Banana", 90, 1)),
-                new FoodItemViewModel(new FoodItemModel("Chocolate", 901, 1)),
-                new FoodItemViewModel(new FoodItemModel("Apple", 45, 2))
-            };
+
+            //Testing();
+
+            Load();
 
             Date = DateTime.Today;
 
@@ -130,10 +147,21 @@ namespace WPF.MVVM.ViewModel
                 OnPropertyChanged(nameof(FoodItems));
             });
 
-            DataSaver.SaveData("Test.json", FoodItems, _date);
-
 
             Mediator.Instance.MessageReceived += OnMessageRecieved;
+        }
+
+        public void Testing()
+        {
+            FoodItems = new ObservableCollection<FoodItemViewModel>
+            {
+                new FoodItemViewModel(new FoodItemModel("Avacado", 90, 1)),
+                new FoodItemViewModel(new FoodItemModel("Chocolate", 901, 1)),
+                new FoodItemViewModel(new FoodItemModel("Apple", 45, 2)),
+                new FoodItemViewModel(new FoodItemModel("Crisps", 750, 2))
+            };
+
+            DataSaver.SaveData("Test.json", FoodItems);
         }
     }
 }
