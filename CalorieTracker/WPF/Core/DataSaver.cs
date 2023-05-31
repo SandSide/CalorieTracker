@@ -24,6 +24,8 @@ namespace WPF.Core
 
             DayFoodIntake temp = new DayFoodIntake(DateTime.Today, foodModels);
 
+            
+            
             List<DayFoodIntake> list = new List<DayFoodIntake> { temp };
 
             var json = JsonSerializer.Serialize(list);
