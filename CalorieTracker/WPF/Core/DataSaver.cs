@@ -13,7 +13,7 @@ namespace WPF.Core
 {
     internal static class DataSaver
     {
-        public static void SaveData(string filename, ObservableCollection<FoodItemViewModel> foodItems)
+        public static void SaveData(string filename, ObservableCollection<FoodItemViewModel> foodItems, DateTime date)
         {
 
             string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -27,7 +27,7 @@ namespace WPF.Core
             // Find food entry for todays date
             foreach (var day in dailyIntakeEntries)
             {
-                if (day.Date.ToString("dd mm yyyy") == DateTime.Today.ToString("dd mm yyyy"))
+                if (day.Date.ToString("dd mm yyyy") == date.ToString("dd mm yyyy"))
                 {
                     day.FoodItems = foodModels;
                     updated = true;
@@ -36,7 +36,7 @@ namespace WPF.Core
             }
 
             if (!updated)
-                dailyIntakeEntries.Add(new DaysFoodIntake(DateTime.Today, foodModels));
+                dailyIntakeEntries.Add(new DaysFoodIntake(date, foodModels));
 
 
             var json = JsonSerializer.Serialize(dailyIntakeEntries);

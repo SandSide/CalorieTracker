@@ -10,6 +10,6 @@ namespace WPF.Core
 {
     internal static class DataConverter
     {
-        public List<FoodItemsViewModel> 
+/*        public List<FoodItemsViewModel> */
     }
 }

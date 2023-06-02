@@ -25,6 +25,7 @@ namespace WPF.MVVM.ViewModel
             {
                 _foodItemModel.Name = value;
                 OnPropertyChanged();
+                Mediator.Instance.SendMessage(this, "Name");
             }
         }
 

@@ -79,6 +79,8 @@ namespace WPF.MVVM.ViewModel
                 OnPropertyChanged(nameof(TotalCalories));
             else if (msg == "RemoveFoodItem")
                 RemoveFoodItem(sender);
+
+            Save();
         }
 
   
@@ -112,6 +114,9 @@ namespace WPF.MVVM.ViewModel
             e.Cancel = false;
         }
 
+        /// <summary>
+        /// Load food entires for todays date
+        /// </summary>
         public void Load()
         {
 
@@ -131,6 +136,15 @@ namespace WPF.MVVM.ViewModel
 
         }
 
+
+        /// <summary>
+        /// Save food list to a file
+        /// </summary>
+        public void Save()
+        {
+            DataSaver.SaveData("Test.json", FoodItems, DateTime.Today);
+        }
+
         public FoodItemsViewModel()
         {
             Load();
@@ -142,20 +156,12 @@ namespace WPF.MVVM.ViewModel
             {
                 FoodItems.Add(new FoodItemViewModel(new FoodItemModel()));
                 OnPropertyChanged(nameof(FoodItems));
+                Save();
             });
 
 
             Mediator.Instance.MessageReceived += OnMessageRecieved;
         }
 
-        public void Testing()
-        {
-            FoodItems = new ObservableCollection<FoodItemViewModel>
-            {
-                new FoodItemViewModel(new FoodItemModel("Naruto", 90, 1)),
-            };
-
-            DataSaver.SaveData("Test.json", FoodItems);
-        }
     }
 }
