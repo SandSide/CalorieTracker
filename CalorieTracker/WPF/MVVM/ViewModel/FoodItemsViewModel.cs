@@ -16,7 +16,6 @@ namespace WPF.MVVM.ViewModel
     /// </summary>
     internal class FoodItemsViewModel : ObservableObject
     {
-
         private ObservableCollection<FoodItemViewModel> _foodItems;
 
         public ObservableCollection<FoodItemViewModel> FoodItems
@@ -37,7 +36,12 @@ namespace WPF.MVVM.ViewModel
         /// </returns>
         public int TotalCalories
         {
-            get { return FoodItems.Sum(item => item.Calories * item.Count); }
+            get 
+            { 
+                 if(FoodItems != null)
+                    return FoodItems.Sum(item => item.Calories * item.Count);
+                 else return 0;
+            }
         }
 
         private DateTime _date;
@@ -79,6 +83,10 @@ namespace WPF.MVVM.ViewModel
                 OnPropertyChanged(nameof(TotalCalories));
             else if (msg == "RemoveFoodItem")
                 RemoveFoodItem(sender);
+            else if (msg == "LoadNextDayEntires")
+                Load(_date.AddDays(1));
+            else if (msg == "LoadPreviousDayEntires")
+                Load(_date.AddDays(-1));
 
             Save();
         }
@@ -104,23 +112,19 @@ namespace WPF.MVVM.ViewModel
             OnPropertyChanged(nameof(TotalCalories));
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            // Cancel the closure
-            e.Cancel = true;
-
-       /*     DataSaver.SaveData("Test.txt");*/
-
-            e.Cancel = false;
-        }
 
         /// <summary>
         /// Load food entires for todays date
         /// </summary>
-        public void Load()
+        /// <param name="date">
+        /// Date of food list to load
+        /// </param>
+        public void Load(DateTime date)
         {
 
-            var data = DataLoader.Load("Test.json");
+            Date = date;
+            var data = DataLoader.Load("Test.json", date);
+
             FoodItems = new ObservableCollection<FoodItemViewModel>();
 
             if(data != null)
@@ -134,6 +138,7 @@ namespace WPF.MVVM.ViewModel
                 FoodItems = new ObservableCollection<FoodItemViewModel>();
 
 
+            OnPropertyChanged(nameof(FoodItems));
         }
 
 
@@ -142,14 +147,15 @@ namespace WPF.MVVM.ViewModel
         /// </summary>
         public void Save()
         {
-            DataSaver.SaveData("Test.json", FoodItems, DateTime.Today);
+            DataSaver.SaveData("Test.json", FoodItems, _date);
         }
+
+        public RelayCommand NextDayCommand { get; set; }
 
         public FoodItemsViewModel()
         {
-            Load();
 
-            Date = DateTime.Today;
+            Load(DateTime.Today);
 
             // Add new Food Item Command
             AddNewFoodItemCommand = new RelayCommand(o =>
@@ -159,9 +165,13 @@ namespace WPF.MVVM.ViewModel
                 Save();
             });
 
+            // Add new Food Item Command
+            NextDayCommand = new RelayCommand(o =>
+            {
+               Load(_date.AddDays(1));
+            });
 
             Mediator.Instance.MessageReceived += OnMessageRecieved;
         }
-
     }
 }

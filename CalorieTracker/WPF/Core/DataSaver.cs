@@ -27,7 +27,7 @@ namespace WPF.Core
             // Find food entry for todays date
             foreach (var day in dailyIntakeEntries)
             {
-                if (day.Date.ToString("dd mm yyyy") == date.ToString("dd mm yyyy"))
+                if (day.Date.ToString("dd mm yyyy") == date.Date.ToString("dd mm yyyy"))
                 {
                     day.FoodItems = foodModels;
                     updated = true;

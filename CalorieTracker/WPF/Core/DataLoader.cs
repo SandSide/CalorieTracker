@@ -22,7 +22,7 @@ namespace WPF.Core
         /// <param name="filename">
         /// Filename which contains list of food entries
         /// </param>
-        public static List<FoodItemModel> Load(string filename) 
+        public static List<FoodItemModel> Load(string filename, DateTime date) 
         {
             
             List<DaysFoodIntake> dailyIntakeEntries = LoadAllEntries(filename);
@@ -30,7 +30,7 @@ namespace WPF.Core
             // Find food entry for todays date
             foreach (var day in dailyIntakeEntries)
             {
-                if(day.Date.ToString("dd mm yyyy") == DateTime.Today.ToString("dd mm yyyy"))
+                if(day.Date.ToString("dd mm yyyy") == date.Date.ToString("dd mm yyyy"))
                     return day.FoodItems;
  
             }

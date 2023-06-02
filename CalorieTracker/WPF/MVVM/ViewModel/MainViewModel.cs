@@ -16,8 +16,12 @@ namespace WPF.MVVM.ViewModel
     {
 
         private object _currentView;
+		private DateTime _currentDate;
 
-        public static FoodItemsViewModel FoodItemsVM  { get; set; }
+        public RelayCommand NextDayCommand { get; set; }
+		public RelayCommand PreviousDayCommand { get; set; }
+
+        public static FoodItemsViewModel? FoodItemsVM  { get; set; }
 
         public object CurrentView
 		{
@@ -29,12 +33,33 @@ namespace WPF.MVVM.ViewModel
 			}
 		}
 
+        private int myVar;
 
-		public MainViewModel() 
+        public String Test
+        {
+            get { return _currentDate.ToString(); }
+        }
+
+
+        public MainViewModel() 
 		{
+            _currentDate = DateTime.Today;
 
-			FoodItemsVM = new FoodItemsViewModel();
+            FoodItemsVM = new FoodItemsViewModel();
 			CurrentView = FoodItemsVM;
+
+            // Add new Food Item Command
+            NextDayCommand = new RelayCommand(o =>
+            {
+                _currentDate = _currentDate.AddDays(1);
+                Mediator.Instance.SendMessage(this, "LoadNextDayEntires");
+
+            });
+
+            PreviousDayCommand = new RelayCommand(o =>
+            {
+                Mediator.Instance.SendMessage(this, "LoadPreviousDayEntires");
+            });
         }
     }
 }

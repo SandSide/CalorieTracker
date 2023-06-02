@@ -13,7 +13,23 @@
         <viewModel:MainViewModel/>
     </Window.DataContext>
 
-    <ContentControl
-        Content="{Binding CurrentView}"/>
+    <StackPanel Orientation="Horizontal"
+                HorizontalAlignment="Center">
+        <Button Width="20"
+                Height="200"
+                Command="{Binding PreviousDayCommand}">
+        </Button>
     
+        <ContentControl
+            Content="{Binding CurrentView}"/>
+
+        <Button Width="20"
+                Height="200"
+                Command="{Binding NextDayCommand}">
+        </Button>
+        <TextBlock
+            Text="{Binding Test}"/>
+    </StackPanel>
+
+
 </Window>
