@@ -7,29 +7,90 @@
         xmlns:viewModel="clr-namespace:WPF.MVVM.ViewModel"
         xmlns:view="clr-namespace:WPF.MVVM.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-
+        Title="MainWindow" Height="450" Width="600"
+                WindowStyle="None"
+                ResizeMode="NoResize"
+                Background="Transparent"
+                AllowsTransparency="True">
     <Window.DataContext>
         <viewModel:MainViewModel/>
     </Window.DataContext>
 
-    <StackPanel Orientation="Horizontal"
-                HorizontalAlignment="Center">
-        <Button Width="20"
-                Height="200"
-                Command="{Binding PreviousDayCommand}">
-        </Button>
-    
-        <ContentControl
-            Content="{Binding CurrentView}"/>
+    <Border Background="#f5f6fa" CornerRadius="30">
 
-        <Button Width="20"
-                Height="200"
-                Command="{Binding NextDayCommand}">
-        </Button>
-        <TextBlock
-            Text="{Binding Test}"/>
-    </StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="75"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            <TextBlock Text="Calorie Tracker"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"                   
+                       Foreground="#192a56"                 
+                       FontSize="22"/>
+
+            <StackPanel Grid.Row="1" >
+
+                <Button Content="Entries"
+                        Height="50"
+                        FontSize="24"
+                        HorizontalAlignment="Center"
+                        Foreground="#7f8fa6"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Margin="0 10 0 10"/>
+                
+                <Button Content="Statistics"
+                        Height="50"
+                        FontSize="24"
+                        HorizontalAlignment="Center"
+                        Foreground="#7f8fa6"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Margin="0 10 0 10"/>
+
+                <Button Content="Settings"
+                        Height="50"
+                        FontSize="24"
+                        HorizontalAlignment="Center"
+                        Foreground="#7f8fa6"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Margin="0 10 0 10"/>
 
 
+            </StackPanel>
+
+            <Border Grid.Column="1" Grid.Row="1"
+                    Background="#00a8ff"
+                    CornerRadius="0 0 30 0">
+                
+
+                <StackPanel Orientation="Horizontal" 
+                        IsEnabled="false"
+                        HorizontalAlignment="Center"
+    >
+                
+                    <Button Width="20"
+                        Height="200"
+                        Command="{Binding PreviousDayCommand}">
+                    </Button>
+
+                    <ContentControl
+                    Content="{Binding CurrentView}"/>
+
+                    <Button Width="20"
+                        Height="200"
+                        Command="{Binding NextDayCommand}">
+                    </Button>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Border>
 </Window>

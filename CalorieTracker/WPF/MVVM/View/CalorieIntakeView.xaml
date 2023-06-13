@@ -7,7 +7,8 @@
              xmlns:viewModel="clr-namespace:WPF.MVVM.ViewModel"
              xmlns:view="clr-namespace:WPF.MVVM.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+                           Background="Transparent">
 
     <UserControl.DataContext>
         <viewModel:FoodItemsViewModel/>
@@ -15,18 +16,22 @@
 
 
     <Border MaxWidth="300"
-            Margin="10 10 10 10"
-            Background="Orange">
+
+            Margin="10 10 10 10">
 
         <StackPanel Orientation="Vertical">
 
-            <TextBox Text="{Binding DateString, Mode = OneWay}"
-                       TextAlignment="Center"
-                       FontSize="32"
-                       Padding="10"
-                       MaxLength="10"/>
+
+                <TextBox Text="{Binding DateString, Mode = OneWay}"
+                           TextAlignment="Center"
+                           FontSize="32"
+                           Padding="10"
+                           MaxLength="10"
+                           Margin="0 0 0 0"/>
 
             <StackPanel Orientation="Horizontal">
+ 
+
                 <TextBlock Text = "Name" 
                            Width = "100" 
                            Margin = "3 5 3 5"/>
@@ -47,6 +52,8 @@
                            TextWrapping="Wrap"
                            Margin = "0 5 3 5"/>
             </StackPanel>
+            
+
 
             <ItemsControl ItemsSource = "{Binding Path = FoodItems}">
                 <ItemsControl.ItemTemplate>
@@ -74,8 +81,6 @@
                                      TextAlignment="Center"
                                      Margin = "0 5 3 5"/>
 
-                            <Button Content="Delete" Command="{Binding RemoveFoodItemCommand}" />
-
                         </StackPanel>
 
                     </DataTemplate>
@@ -99,12 +104,6 @@
 
 
             </StackPanel>
-
-            <TextBlock
-                Text="{Binding Test}"/>
-
-            <Button Content="Delete" Command="{Binding NextDayCommand}" />
-
         </StackPanel>
     </Border>
 
