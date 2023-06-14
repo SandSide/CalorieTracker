@@ -38,34 +38,29 @@
             <StackPanel Grid.Row="1" >
 
                 <Button Content="Entries"
-                        Height="50"
-                        FontSize="24"
-                        HorizontalAlignment="Center"
-                        Foreground="#7f8fa6"
-                        Background="Transparent"
-                        BorderThickness="0"
-                        Margin="0 10 0 10"/>
+                        Style="{StaticResource MenuButton}"/>
+
+                <Button Content="Staticis"
+                        Style="{StaticResource MenuButton}"/>
                 
-                <Button Content="Statistics"
-                        Height="50"
-                        FontSize="24"
-                        HorizontalAlignment="Center"
-                        Foreground="#7f8fa6"
-                        Background="Transparent"
-                        BorderThickness="0"
-                        Margin="0 10 0 10"/>
-
                 <Button Content="Settings"
-                        Height="50"
-                        FontSize="24"
-                        HorizontalAlignment="Center"
-                        Foreground="#7f8fa6"
-                        Background="Transparent"
-                        BorderThickness="0"
-                        Margin="0 10 0 10"/>
-
+                        Style="{StaticResource MenuButton}"/>
 
             </StackPanel>
+
+
+
+            <Border Grid.Column="1" Grid.Row="0"
+                    Background="#00a8ff"
+                    CornerRadius="0 30 0 0">
+
+                <TextBlock Text="Entries"
+                           FontSize="32"    
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"                   
+                           Foreground="White"/>
+
+            </Border>
 
             <Border Grid.Column="1" Grid.Row="1"
                     Background="#00a8ff"
@@ -73,22 +68,11 @@
                 
 
                 <StackPanel Orientation="Horizontal" 
-                        IsEnabled="false"
-                        HorizontalAlignment="Center"
-    >
+                            IsEnabled="True"
+                            HorizontalAlignment="Center">
                 
-                    <Button Width="20"
-                        Height="200"
-                        Command="{Binding PreviousDayCommand}">
-                    </Button>
+                    <ContentControl Content="{Binding CurrentView}"/>
 
-                    <ContentControl
-                    Content="{Binding CurrentView}"/>
-
-                    <Button Width="20"
-                        Height="200"
-                        Command="{Binding NextDayCommand}">
-                    </Button>
                 </StackPanel>
             </Border>
         </Grid>

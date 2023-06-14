@@ -7,11 +7,22 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <DataTemplate DataType="{x:Type viewModel:FoodItemsViewModel}">
+                        <view:CalorieIntakeView/>
+                    </DataTemplate>
+                </ResourceDictionary>
 
-            <DataTemplate DataType="{x:Type viewModel:FoodItemsViewModel}">
-                <view:CalorieIntakeView/>
-            </DataTemplate>
+                <ResourceDictionary Source="ResourceDictonaries/MainMenuDictonary.xaml"/>
+
+            </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>
+
+
+ 
+
+
     </Application.Resources>
 </Application>
