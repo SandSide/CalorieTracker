@@ -15,7 +15,7 @@
                 </ResourceDictionary>
 
                 <ResourceDictionary Source="ResourceDictonaries/MainMenuDictonary.xaml"/>
-
+                <ResourceDictionary Source="ResourceDictonaries/FoodEntriesDictonary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>

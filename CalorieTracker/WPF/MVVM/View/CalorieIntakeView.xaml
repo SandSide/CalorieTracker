@@ -7,7 +7,7 @@
              xmlns:viewModel="clr-namespace:WPF.MVVM.ViewModel"
              xmlns:view="clr-namespace:WPF.MVVM.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
+             d:DesignHeight="450" d:DesignWidth="450"
                            Background="Transparent">
 
     <UserControl.DataContext>
@@ -15,76 +15,140 @@
     </UserControl.DataContext>
 
 
-    <Border MaxWidth="300"
-            Background="White"
-            CornerRadius="10"
-            Margin="10 10 10 10">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Vertical">
-
-
-                <TextBox Text="{Binding DateString, Mode = OneWay}"
-                           TextAlignment="Center"
-                           FontSize="32"
-                           Padding="10"
-                           MaxLength="10"
-                           Margin="0 0 0 0"/>
-
-
+        <Border Background="White"
+                BorderThickness="0">
             
+            <StackPanel Orientation="Vertical">
+
+                <Border Background="#fbc531"
+                        Height="45">
+                    
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                        
+                        <Button Width="15"
+                                Height="15"
+                                BorderThickness="0"
+                                Background="Transparent"
+                                Foreground="White"
+                                Margin="10 0 10 0">
+
+                            <Image Source="../../Assets/Images/right-arrow.png" RenderTransformOrigin="0.5,0.5">
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="180"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                            </Image>
+
+                        </Button>
+                        
+                        <TextBox Text="{Binding DateString, Mode=OneWay}"
+                                 Style="{StaticResource EntryDate}"/>
+
+                        <Button Width="15"
+                                Height="15"
+                                BorderThickness="0"
+                                Background="Transparent"
+                                Foreground="White"
+                                Margin="10 0 10 0">
+
+                            <Image Source="../../Assets/Images/right-arrow.png"/>
+
+                        </Button>
+
+                    </StackPanel>
+                </Border>
 
 
-            <ItemsControl ItemsSource = "{Binding Path = FoodItems}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
+                <ItemsControl ItemsSource = "{Binding Path = FoodItems}"
+                              Padding="5" >
 
-                        <StackPanel Orientation = "Horizontal">
+                    <ItemsControl.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="FrameworkElement.Margin" Value="0 0 0 5"/>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
 
-                            <TextBox Text = "{Binding Path = Name, Mode = TwoWay}" 
-                                     Width = "100" 
-                                     Margin = "3 5 3 5"/>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
 
-                            <TextBox Text = "{Binding Path = Calories, Mode = TwoWay}" 
-                                     Width = "50" 
-                                     Margin = "0 5 3 5"/>
+                            <StackPanel Orientation = "Horizontal">
+ 
+                                <TextBox Text = "{Binding Path = Name, Mode = TwoWay}" 
+                                         Width = "75"
+                                         BorderThickness="1"
+                                         Margin="0 0 5 0"/>
 
-                            <TextBox Text = "{Binding Path = Count, Mode = TwoWay}" 
-                                     Width = "25" Margin = "0 5 3 5"
-                                     Padding="1"
-                                     TextAlignment="Center"/>
+                                <TextBox Text = "{Binding Path = Calories, Mode = TwoWay}" 
+                                         Width = "25"
+                                         BorderThickness="1"
+                                         Margin="0 0 5 0"
+                                         TextAlignment="Center"/>
 
-                            <TextBox Text = "{Binding Path = TotalCalories, Mode = OneWay}" 
-                                     Width = "50" 
-                                     Background="Orange"
-                                     BorderThickness="0"
-                                     TextAlignment="Center"
-                                     Margin = "0 5 3 5"/>
+                                <TextBox Text = "{Binding Path = Count, Mode = TwoWay}" 
+                                         Width = "25"
+                                         Margin="0 0 5 0"
+                                         TextAlignment="Center"/>
 
-                        </StackPanel>
+                                <TextBox Text = "{Binding Path = TotalCalories, Mode = OneWay}" 
+                                         Width = "25"
+                                         BorderThickness="0"
+                                         Margin="0 0 5 0"
+                                         TextAlignment="Right"/>
 
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                                <Button Width="15"
+                                        Height="15"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Command="{Binding RemoveFoodItemCommand}">
 
-            <Button Width="100"
-                    Height="25"
-                    Content="Add"
-                    Command="{Binding AddNewFoodItemCommand}"/>
+                                    <Image Source="../../Assets/Images/delete-button.png"/>
+                                </Button>
 
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Total Calories:"
-                           FontSize="18"         
-                           Margin = "0 0 5 0"/>
+                            </StackPanel>
 
-                <TextBlock Text="{Binding TotalCalories}"
-                           Width="100"
-                           FontSize="24"
-                           Margin = "0 0 0 0"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <Button Width="100"
+                        Background="#4cd137"
+                        BorderThickness="0"
+                        Foreground="White" 
+                        Height="25"
+                        Content="Add"
+                        Command="{Binding AddNewFoodItemCommand}"/>
 
 
             </StackPanel>
-        </StackPanel>
-    </Border>
+        </Border>
 
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="1"
+                    Width="200">
+            
+            <TextBlock Text="Total Calories:"
+                                        FontSize="18"         
+                                        Margin = "0 0 5 0"/>
+
+            <TextBlock Text="{Binding TotalCalories}"
+                                        Width="100"
+                                        FontSize="24"
+                                        Margin = "0 0 0 0"/>
+
+
+        </StackPanel>
+
+    </Grid>
 
 </UserControl>

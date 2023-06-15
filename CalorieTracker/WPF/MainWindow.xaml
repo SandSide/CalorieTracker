@@ -16,12 +16,14 @@
         <viewModel:MainViewModel/>
     </Window.DataContext>
 
-    <Border Background="#f5f6fa" CornerRadius="30">
+    <Border Background="#f5f6fa" CornerRadius="0"
+            BorderBrush="#0097e6"
+            BorderThickness=".1">
 
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="400"/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
@@ -52,7 +54,7 @@
 
             <Border Grid.Column="1" Grid.Row="0"
                     Background="#00a8ff"
-                    CornerRadius="0 30 0 0">
+                    CornerRadius="0 0 0 0">
 
                 <TextBlock Text="Entries"
                            FontSize="32"    
@@ -63,17 +65,12 @@
             </Border>
 
             <Border Grid.Column="1" Grid.Row="1"
+                    Padding="5"
                     Background="#00a8ff"
-                    CornerRadius="0 0 30 0">
-                
-
-                <StackPanel Orientation="Horizontal" 
-                            IsEnabled="True"
-                            HorizontalAlignment="Center">
-                
+                    CornerRadius="0 0 0 0">
+          
                     <ContentControl Content="{Binding CurrentView}"/>
 
-                </StackPanel>
             </Border>
         </Grid>
     </Border>
