@@ -7,7 +7,7 @@
              xmlns:viewModel="clr-namespace:WPF.MVVM.ViewModel"
              xmlns:view="clr-namespace:WPF.MVVM.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="450"
+             d:DesignHeight="450" d:DesignWidth="500"
                            Background="Transparent">
 
     <UserControl.DataContext>
@@ -17,17 +17,20 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="250"/>
         </Grid.ColumnDefinitions>
 
         <Border Background="White"
-                BorderThickness="0">
+                BorderThickness="0"
+                Height="450"
+                CornerRadius="10 10 10 10">
             
             <StackPanel Orientation="Vertical">
 
                 <Border Background="#fbc531"
-                        Height="45">
+                        Height="45"
+                        CornerRadius="10 10 0 0">
                     
                     <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Center">
@@ -71,57 +74,58 @@
                     </StackPanel>
                 </Border>
 
-
-                <ItemsControl ItemsSource = "{Binding Path = FoodItems}"
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource = "{Binding Path = FoodItems}"
                               Padding="5" >
 
-                    <ItemsControl.ItemContainerStyle>
-                        <Style>
-                            <Setter Property="FrameworkElement.Margin" Value="0 0 0 5"/>
-                        </Style>
-                    </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style>
+                                <Setter Property="FrameworkElement.Margin" Value="0 0 0 5"/>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
 
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
 
-                            <StackPanel Orientation = "Horizontal">
- 
-                                <TextBox Text = "{Binding Path = Name, Mode = TwoWay}" 
-                                         Width = "75"
-                                         BorderThickness="1"
-                                         Margin="0 0 5 0"/>
+                                <StackPanel Orientation = "Horizontal">
 
-                                <TextBox Text = "{Binding Path = Calories, Mode = TwoWay}" 
-                                         Width = "25"
-                                         BorderThickness="1"
-                                         Margin="0 0 5 0"
-                                         TextAlignment="Center"/>
+                                    <TextBox Text = "{Binding Path = Name, Mode = TwoWay}" 
+                                             Width = "100"
+                                             BorderThickness="1"
+                                             Margin="0 0 0 0"/>
 
-                                <TextBox Text = "{Binding Path = Count, Mode = TwoWay}" 
-                                         Width = "25"
-                                         Margin="0 0 5 0"
-                                         TextAlignment="Center"/>
+                                    <TextBox Text = "{Binding Path = Calories, Mode = TwoWay}" 
+                                             Width = "35"
+                                             BorderThickness="1"
+                                             Margin="5 0 5 0"
+                                             TextAlignment="Center"/>
 
-                                <TextBox Text = "{Binding Path = TotalCalories, Mode = OneWay}" 
-                                         Width = "25"
-                                         BorderThickness="0"
-                                         Margin="0 0 5 0"
-                                         TextAlignment="Right"/>
+                                    <TextBox Text = "{Binding Path = Count, Mode = TwoWay}" 
+                                             Width = "25"
+                                             Margin="0 0 0 0"
+                                             TextAlignment="Center"/>
 
-                                <Button Width="15"
-                                        Height="15"
-                                        Background="Transparent"
-                                        BorderThickness="0"
-                                        Command="{Binding RemoveFoodItemCommand}">
+                                    <TextBox Text = "{Binding Path = TotalCalories, Mode = OneWay}" 
+                                             Width = "30"
+                                             BorderThickness="0"
+                                             Margin="15 0 5 0"
+                                             TextAlignment="Right"/>
 
-                                    <Image Source="../../Assets/Images/delete-button.png"/>
-                                </Button>
+                                    <Button Width="15"
+                                            Height="15"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            Command="{Binding RemoveFoodItemCommand}">
 
-                            </StackPanel>
+                                        <Image Source="../../Assets/Images/delete-button.png"/>
+                                    </Button>
 
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                                </StackPanel>
+
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
 
                 <Button Width="100"
                         Background="#4cd137"
@@ -135,22 +139,40 @@
             </StackPanel>
         </Border>
 
-        <StackPanel Orientation="Horizontal"
-                    Grid.Column="1"
-                    Width="200">
+        <StackPanel Grid.Column="1"
+                    Orientation="Vertical" 
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Center">
             
-            <TextBlock Text="Total Calories:"
-                                        FontSize="18"         
-                                        Margin = "0 0 5 0"/>
 
-            <TextBlock Text="{Binding TotalCalories}"
-                                        Width="100"
-                                        FontSize="24"
-                                        Margin = "0 0 0 0"/>
+            <Border Background="White"
+                    Width="200"
+                    Padding="10"
+                    Height="100"
+                    VerticalAlignment="Top"
+                    CornerRadius="10">
+            
+                <StackPanel Orientation="Vertical">
 
+                    <Border Width="150"
+                            Height="10"
+                            Background="#4cd137"
+                            CornerRadius="5"/>
 
+                    <TextBlock Text="{Binding TotalCalories}"
+                               Width="100"
+                               FontSize="32"
+                               Margin = "0 0 0 0"
+                               TextAlignment="Center"/>
+
+                    <TextBlock Text="Total Calories"
+                               FontSize="16"         
+                               Margin = "0 0 5 0"
+                               TextAlignment="Center"/>
+
+                </StackPanel>
+            </Border>
         </StackPanel>
-
     </Grid>
 
 </UserControl>

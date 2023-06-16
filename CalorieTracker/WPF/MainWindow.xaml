@@ -7,7 +7,7 @@
         xmlns:viewModel="clr-namespace:WPF.MVVM.ViewModel"
         xmlns:view="clr-namespace:WPF.MVVM.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="600"
+        Title="MainWindow" Height="450" Width="650"
                 WindowStyle="None"
                 ResizeMode="NoResize"
                 Background="Transparent"
@@ -23,8 +23,8 @@
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="500"/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
@@ -36,7 +36,7 @@
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"                   
                        Foreground="#192a56"                 
-                       FontSize="22"/>
+                       FontSize="20"/>
 
             <StackPanel Grid.Row="1" >
 

@@ -3,7 +3,7 @@
 
     <Style TargetType="Button" x:Key="MenuButton">
         <Setter Property="Background" Value="Green"/>
-        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="FontSize" Value="20"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="Foreground" Value="#7f8fa6"/>
         <Setter Property="Background" Value="Transparent"/>

@@ -136,6 +136,7 @@ namespace WPF.MVVM.ViewModel
 
 
             OnPropertyChanged(nameof(FoodItems));
+            OnPropertyChanged(nameof(TotalCalories));
         }
 
 
@@ -164,13 +165,13 @@ namespace WPF.MVVM.ViewModel
                 Save();
             });
 
-            // Add new Food Item Command
+            // Load Next Day
             LoadNextDayCommand = new RelayCommand(o =>
             {
                 Load(_date.AddDays(1));
             });
 
-
+            // Load Previous day
             LoadPreviousDayCommand = new RelayCommand(o =>
             {
                 Load(Date.AddDays(-1));
