@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Images\delete-button.png" />
+    <None Remove="Assets\Images\right-arrow.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
@@ -16,7 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Assets\Images\" />
+    <Resource Include="Assets\Images\delete-button.png" />
+    <Resource Include="Assets\Images\right-arrow.png" />
   </ItemGroup>
 
 </Project>

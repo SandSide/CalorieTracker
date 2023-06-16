@@ -4,18 +4,15 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using WPF.Core;
 using WPF.MVVM.Model;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WPF.MVVM.ViewModel
 {
-
-    /// <summary>
-    ///  This class stores and manages todays eaten food itmes. Calcualtes total calories. Allows one to add/remove food items in the list.
-    /// </summary>
-    internal class FoodItemsViewModel : ObservableObject
+    internal class FoodEntriesViewModel : ObservableObject
     {
+
         private ObservableCollection<FoodItemViewModel> _foodItems;
 
         public ObservableCollection<FoodItemViewModel> FoodItems
@@ -36,11 +33,11 @@ namespace WPF.MVVM.ViewModel
         /// </returns>
         public int TotalCalories
         {
-            get 
-            { 
-                 if(FoodItems != null)
+            get
+            {
+                if (FoodItems != null)
                     return FoodItems.Sum(item => item.Calories * item.Count);
-                 else return 0;
+                else return 0;
             }
         }
 
@@ -55,14 +52,14 @@ namespace WPF.MVVM.ViewModel
         /// </returns>
         public string DateString
         {
-            get { return _date.ToString("dd MMM");}
+            get { return _date.ToString("dd MMM"); }
         }
 
         public DateTime Date
         {
             get { return _date; }
-            set 
-            { 
+            set
+            {
                 _date = value;
                 OnPropertyChanged("DateString");
             }
@@ -77,7 +74,7 @@ namespace WPF.MVVM.ViewModel
         /// <param name="msg">
         /// Message recieved
         /// </param>
-        public void OnMessageRecieved (object sender, string msg)
+        public void OnMessageRecieved(object sender, string msg)
         {
             if (msg == "TotalCalories")
                 OnPropertyChanged(nameof(TotalCalories));
@@ -90,9 +87,6 @@ namespace WPF.MVVM.ViewModel
 
             Save();
         }
-
-  
-        public RelayCommand AddNewFoodItemCommand { get; set; }
 
 
         /// <summary>
@@ -107,7 +101,7 @@ namespace WPF.MVVM.ViewModel
             if (!FoodItems.Contains((FoodItemViewModel)foodItem))
                 return;
 
-            FoodItems.Remove((FoodItemViewModel) foodItem);
+            FoodItems.Remove((FoodItemViewModel)foodItem);
             OnPropertyChanged(nameof(FoodItems));
             OnPropertyChanged(nameof(TotalCalories));
         }
@@ -127,15 +121,18 @@ namespace WPF.MVVM.ViewModel
 
             FoodItems = new ObservableCollection<FoodItemViewModel>();
 
-            if(data != null)
+            if (data != null)
             {
-                foreach(FoodItemModel food in data)
+                foreach (FoodItemModel food in data)
                 {
                     FoodItems.Add(new FoodItemViewModel(food));
                 }
             }
             else
-                FoodItems = new ObservableCollection<FoodItemViewModel>();
+                FoodItems = new ObservableCollection<FoodItemViewModel>
+                {
+                    new FoodItemViewModel(new FoodItemModel())
+                };
 
 
             OnPropertyChanged(nameof(FoodItems));
@@ -150,9 +147,11 @@ namespace WPF.MVVM.ViewModel
             DataSaver.SaveData("Test.json", FoodItems, _date);
         }
 
-        public RelayCommand NextDayCommand { get; set; }
+        public RelayCommand AddNewFoodItemCommand { get; set; }
+        public RelayCommand LoadNextDayCommand { get; set; }
+        public RelayCommand LoadPreviousDayCommand { get; set; }
 
-        public FoodItemsViewModel()
+        public FoodEntriesViewModel()
         {
 
             Load(DateTime.Today);
@@ -166,12 +165,19 @@ namespace WPF.MVVM.ViewModel
             });
 
             // Add new Food Item Command
-            NextDayCommand = new RelayCommand(o =>
+            LoadNextDayCommand = new RelayCommand(o =>
             {
-               Load(_date.AddDays(1));
+                Load(_date.AddDays(1));
+            });
+
+
+            LoadPreviousDayCommand = new RelayCommand(o =>
+            {
+                Load(Date.AddDays(-1));
             });
 
             Mediator.Instance.MessageReceived += OnMessageRecieved;
         }
+
     }
 }

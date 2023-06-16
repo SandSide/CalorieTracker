@@ -9,7 +9,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
-                    <DataTemplate DataType="{x:Type viewModel:FoodItemsViewModel}">
+                    <DataTemplate DataType="{x:Type viewModel:FoodEntriesViewModel}">
                         <view:CalorieIntakeView/>
                     </DataTemplate>
                 </ResourceDictionary>
