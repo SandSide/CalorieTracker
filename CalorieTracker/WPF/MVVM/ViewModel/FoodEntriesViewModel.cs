@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using WPF.Core;
@@ -22,6 +23,7 @@ namespace WPF.MVVM.ViewModel
             {
                 _foodItems = value;
                 OnPropertyChanged("TotalCalories");
+                OnPropertyChanged(nameof(CalorieIntakeProgress));
             }
         }
 
@@ -42,7 +44,6 @@ namespace WPF.MVVM.ViewModel
         }
 
         private DateTime _date;
-
 
         /// <summary>
         /// Date in  string format
@@ -65,6 +66,13 @@ namespace WPF.MVVM.ViewModel
             }
         }
 
+
+        public int CalorieIntakeProgress
+        {
+            get { return (int)Math.Round((double)(100 * TotalCalories) / 2000); }
+        }
+
+
         /// <summary>
         /// Handles Messages recieved from Mediator
         /// </summary>
@@ -77,13 +85,12 @@ namespace WPF.MVVM.ViewModel
         public void OnMessageRecieved(object sender, string msg)
         {
             if (msg == "TotalCalories")
+            {
                 OnPropertyChanged(nameof(TotalCalories));
+                OnPropertyChanged(nameof(CalorieIntakeProgress));
+            }
             else if (msg == "RemoveFoodItem")
                 RemoveFoodItem(sender);
-            else if (msg == "LoadNextDayEntires")
-                Load(_date.AddDays(1));
-            else if (msg == "LoadPreviousDayEntires")
-                Load(_date.AddDays(-1));
 
             Save();
         }
@@ -104,6 +111,7 @@ namespace WPF.MVVM.ViewModel
             FoodItems.Remove((FoodItemViewModel)foodItem);
             OnPropertyChanged(nameof(FoodItems));
             OnPropertyChanged(nameof(TotalCalories));
+            OnPropertyChanged(nameof(CalorieIntakeProgress));
         }
 
 
@@ -137,6 +145,7 @@ namespace WPF.MVVM.ViewModel
 
             OnPropertyChanged(nameof(FoodItems));
             OnPropertyChanged(nameof(TotalCalories));
+            OnPropertyChanged(nameof(CalorieIntakeProgress));
         }
 
 
@@ -162,6 +171,7 @@ namespace WPF.MVVM.ViewModel
             {
                 FoodItems.Add(new FoodItemViewModel(new FoodItemModel()));
                 OnPropertyChanged(nameof(FoodItems));
+                OnPropertyChanged(nameof(CalorieIntakeProgress));
                 Save();
             });
 
