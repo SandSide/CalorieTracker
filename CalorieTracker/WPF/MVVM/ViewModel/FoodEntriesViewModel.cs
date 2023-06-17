@@ -5,6 +5,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using WPF.Core;
 using WPF.MVVM.Model;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -67,11 +68,30 @@ namespace WPF.MVVM.ViewModel
         }
 
 
+
+        /// <summary>
+        /// Get Calorie Intake as a percentage based on your daily max food intake
+        /// </summary>
+        /// <returns>
+        /// Total Calories consumed as a percerntage to your maximum daily food intake
+        /// </returns>
         public int CalorieIntakeProgress
         {
             get { return (int)Math.Round((double)(100 * TotalCalories) / 2000); }
         }
 
+
+        public System.Windows.Media.Brush CalorieIntakeProgressColour
+        {
+            get => CalorieIntakeProgress switch
+            {
+                > 90 => (Brush)new BrushConverter().ConvertFrom("#e84118"),
+                > 75 => (Brush)new BrushConverter().ConvertFrom("#e1b12c"),
+                >= 0 => (Brush)new BrushConverter().ConvertFrom("#4cd137"),
+                _ => (Brush)new BrushConverter().ConvertFrom("#e84118"),
+            };
+
+        }
 
         /// <summary>
         /// Handles Messages recieved from Mediator
@@ -88,6 +108,7 @@ namespace WPF.MVVM.ViewModel
             {
                 OnPropertyChanged(nameof(TotalCalories));
                 OnPropertyChanged(nameof(CalorieIntakeProgress));
+                OnPropertyChanged(nameof(CalorieIntakeProgressColour));
             }
             else if (msg == "RemoveFoodItem")
                 RemoveFoodItem(sender);
@@ -112,6 +133,7 @@ namespace WPF.MVVM.ViewModel
             OnPropertyChanged(nameof(FoodItems));
             OnPropertyChanged(nameof(TotalCalories));
             OnPropertyChanged(nameof(CalorieIntakeProgress));
+            OnPropertyChanged(nameof(CalorieIntakeProgressColour));
         }
 
 
@@ -146,6 +168,7 @@ namespace WPF.MVVM.ViewModel
             OnPropertyChanged(nameof(FoodItems));
             OnPropertyChanged(nameof(TotalCalories));
             OnPropertyChanged(nameof(CalorieIntakeProgress));
+            OnPropertyChanged(nameof(CalorieIntakeProgressColour));
         }
 
 

@@ -157,8 +157,8 @@
                     <ProgressBar Maximum="100"
                                  Width="150"
                                  Height="10"
-                                 Background="#e84118"
-                                 Foreground="#4cd137"
+                                 Background="#dcdde1"
+                                 Foreground="{Binding CalorieIntakeProgressColour}"
                                  Value="{Binding CalorieIntakeProgress, Mode=OneWay}"/>
 
                     <TextBlock Text="{Binding TotalCalories}"
