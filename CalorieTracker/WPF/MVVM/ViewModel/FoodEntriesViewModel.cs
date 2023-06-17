@@ -83,14 +83,18 @@ namespace WPF.MVVM.ViewModel
 
         public System.Windows.Media.Brush CalorieIntakeProgressColour
         {
-            get => CalorieIntakeProgress switch
+            get 
             {
-                > 90 => (Brush)new BrushConverter().ConvertFrom("#e84118"),
-                > 75 => (Brush)new BrushConverter().ConvertFrom("#e1b12c"),
-                >= 0 => (Brush)new BrushConverter().ConvertFrom("#4cd137"),
-                _ => (Brush)new BrushConverter().ConvertFrom("#e84118"),
-            };
+                BrushConverter brushConverter = new BrushConverter();
 
+                return CalorieIntakeProgress switch
+                {
+                    > 90 => (Brush)brushConverter.ConvertFrom("#e84118") ?? Brushes.Red,
+                    > 75 => (Brush)brushConverter.ConvertFrom("#e1b12c") ?? Brushes.Yellow,
+                    >= 0 => (Brush)brushConverter.ConvertFrom("#4cd137") ?? Brushes.Green,
+                    _ => (Brush)brushConverter.ConvertFrom("#e84118") ?? Brushes.Red,
+                };
+            }
         }
 
         /// <summary>
