@@ -13,13 +13,13 @@ using static WPF.Core.DataSaver;
 
 namespace WPF.Core
 {
-    internal class FoodEntryLoader : IDataLoader<List<FoodItemModel>>
+    internal class DateBasedFoodEntryLoader : IDataLoader<List<FoodItemModel>>
     {
 
         public DateTime EntryDate { get; set; }
         public string FilePath { get; set; }
 
-        public FoodEntryLoader(DateTime date, string filePath)
+        public DateBasedFoodEntryLoader(DateTime date, string filePath)
         {
             EntryDate = date;
             FilePath = filePath;

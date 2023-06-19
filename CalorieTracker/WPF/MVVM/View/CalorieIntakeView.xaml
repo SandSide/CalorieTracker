@@ -11,7 +11,7 @@
                            Background="Transparent">
 
     <UserControl.DataContext>
-        <viewModel:FoodEntriesViewModel />
+        <viewModel:FoodEntriesViewModel/>
     </UserControl.DataContext>
 
 

@@ -10,6 +10,7 @@ using System.Windows.Media;
 using WPF.Core;
 using WPF.MVVM.Model;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Windows.Documents;
 
 namespace WPF.MVVM.ViewModel
 {
@@ -18,7 +19,7 @@ namespace WPF.MVVM.ViewModel
 
         private ObservableCollection<FoodItemViewModel> _foodItems;
         private DateTime _date;
-        private IDataLoader<List<FoodItemModel>> _foodItemsLoader;
+        private IDataLoader<List<FoodItemModel>> _loader;
 
         public ObservableCollection<FoodItemViewModel> FoodItems
         {
@@ -151,9 +152,14 @@ namespace WPF.MVVM.ViewModel
         /// </param>
         public void Load(DateTime date)
         {
-
             Date = date;
-            var data = _foodItemsLoader.Load();
+
+            if (_loader is DateBasedFoodEntryLoader dateBasedLoader)
+            {
+                dateBasedLoader.EntryDate = Date; // Change the stored date in the loader
+            }
+
+            var data = _loader.Load();
 
             FoodItems = new ObservableCollection<FoodItemViewModel>();
 
@@ -190,13 +196,14 @@ namespace WPF.MVVM.ViewModel
         public RelayCommand LoadNextDayCommand { get; set; }
         public RelayCommand LoadPreviousDayCommand { get; set; }
 
-        public FoodEntriesViewModel(int t)
+        public FoodEntriesViewModel()
         {
 
             //IDataLoader<List<FoodItemModel>> loader
             string tempFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "test.json");
-            var loader = new FoodEntryLoader(DateTime.Today, tempFilePath);
-            _foodItemsLoader = loader;
+            var loader = new DateBasedFoodEntryLoader(DateTime.Today, tempFilePath);
+            
+            _loader = loader;
 
             Load(DateTime.Today);
 

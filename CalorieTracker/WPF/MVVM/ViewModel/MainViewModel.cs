@@ -38,9 +38,9 @@ namespace WPF.MVVM.ViewModel
 		{
 			string tempFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "test.json");
 
-            FoodEntryLoader FoodEntriesLoader = new FoodEntryLoader(DateTime.Today, tempFilePath);
+            DateBasedFoodEntryLoader FoodEntriesLoader = new DateBasedFoodEntryLoader(DateTime.Today, tempFilePath);
 
-            FoodEntryVM = new FoodEntriesViewModel(1);
+            FoodEntryVM = new FoodEntriesViewModel();
 			CurrentView = FoodEntryVM;
         }
     }
