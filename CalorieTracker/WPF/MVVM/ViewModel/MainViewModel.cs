@@ -30,13 +30,6 @@ namespace WPF.MVVM.ViewModel
 			}
 		}
 
-        private int myVar;
-
-        public String Test
-        {
-            get { return _currentDate.ToString(); }
-        }
-
 
         public MainViewModel() 
 		{
