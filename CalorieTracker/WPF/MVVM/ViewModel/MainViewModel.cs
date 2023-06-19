@@ -40,7 +40,7 @@ namespace WPF.MVVM.ViewModel
 
             DateBasedFoodEntryLoader FoodEntriesLoader = new DateBasedFoodEntryLoader(DateTime.Today, tempFilePath);
 
-            FoodEntryVM = new FoodEntriesViewModel();
+            FoodEntryVM = new FoodEntriesViewModel(FoodEntriesLoader);
 			CurrentView = FoodEntryVM;
         }
     }

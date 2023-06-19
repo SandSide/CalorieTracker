@@ -196,13 +196,9 @@ namespace WPF.MVVM.ViewModel
         public RelayCommand LoadNextDayCommand { get; set; }
         public RelayCommand LoadPreviousDayCommand { get; set; }
 
-        public FoodEntriesViewModel()
+        public FoodEntriesViewModel(IDataLoader<List<FoodItemModel>> loader)
         {
 
-            //IDataLoader<List<FoodItemModel>> loader
-            string tempFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "test.json");
-            var loader = new DateBasedFoodEntryLoader(DateTime.Today, tempFilePath);
-            
             _loader = loader;
 
             Load(DateTime.Today);
