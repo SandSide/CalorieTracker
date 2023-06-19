@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.IO;
 using WPF.Core;
 using WPF.MVVM.Model;
 using WPF.MVVM.View;
@@ -17,6 +18,8 @@ namespace WPF.MVVM.ViewModel
 
         private object _currentView;
 		private DateTime _currentDate;
+
+		private SettingsModel _settingsModel;
 
         public static FoodEntriesViewModel? FoodEntryVM  { get; set; }
 
@@ -33,9 +36,11 @@ namespace WPF.MVVM.ViewModel
 
         public MainViewModel() 
 		{
-            _currentDate = DateTime.Today;
+			string tempFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "test.json");
 
-            FoodEntryVM = new FoodEntriesViewModel();
+            FoodEntryLoader FoodEntriesLoader = new FoodEntryLoader(DateTime.Today, tempFilePath);
+
+            FoodEntryVM = new FoodEntriesViewModel(1);
 			CurrentView = FoodEntryVM;
         }
     }

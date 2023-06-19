@@ -11,12 +11,15 @@ using WPF.MVVM.ViewModel;
 
 namespace WPF.Core
 {
-    internal static class DataSaver
+    internal class DataSaver
     {
+
+        private readonly SettingsModel _settingsModel;
+
         public static void SaveData(string filename, ObservableCollection<FoodItemViewModel> foodItems, DateTime date)
         {
 
-            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+   /*         string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             string path = Path.Combine(docPath, filename);
 
             List<FoodItemModel> foodModels = foodItems.Select(o => o.FoodItemModel).ToList();
@@ -40,7 +43,7 @@ namespace WPF.Core
 
 
             var json = JsonSerializer.Serialize(dailyIntakeEntries);
-            File.WriteAllText(path, json);
+            File.WriteAllText(path, json);*/
         }
 
     }

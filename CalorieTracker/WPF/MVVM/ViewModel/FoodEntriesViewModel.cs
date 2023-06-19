@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Numerics;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using WPF.Core;
@@ -16,6 +17,8 @@ namespace WPF.MVVM.ViewModel
     {
 
         private ObservableCollection<FoodItemViewModel> _foodItems;
+        private DateTime _date;
+        private IDataLoader<List<FoodItemModel>> _foodItemsLoader;
 
         public ObservableCollection<FoodItemViewModel> FoodItems
         {
@@ -44,7 +47,6 @@ namespace WPF.MVVM.ViewModel
             }
         }
 
-        private DateTime _date;
 
         /// <summary>
         /// Date in  string format
@@ -117,7 +119,7 @@ namespace WPF.MVVM.ViewModel
             else if (msg == "RemoveFoodItem")
                 RemoveFoodItem(sender);
 
-            Save();
+           // Save();
         }
 
 
@@ -151,7 +153,7 @@ namespace WPF.MVVM.ViewModel
         {
 
             Date = date;
-            var data = DataLoader.Load("Test.json", date);
+            var data = _foodItemsLoader.Load();
 
             FoodItems = new ObservableCollection<FoodItemViewModel>();
 
@@ -181,15 +183,20 @@ namespace WPF.MVVM.ViewModel
         /// </summary>
         public void Save()
         {
-            DataSaver.SaveData("Test.json", FoodItems, _date);
+            //DataSaver.SaveData("Test.json", FoodItems, _date);
         }
 
         public RelayCommand AddNewFoodItemCommand { get; set; }
         public RelayCommand LoadNextDayCommand { get; set; }
         public RelayCommand LoadPreviousDayCommand { get; set; }
 
-        public FoodEntriesViewModel()
+        public FoodEntriesViewModel(int t)
         {
+
+            //IDataLoader<List<FoodItemModel>> loader
+            string tempFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "test.json");
+            var loader = new FoodEntryLoader(DateTime.Today, tempFilePath);
+            _foodItemsLoader = loader;
 
             Load(DateTime.Today);
 
