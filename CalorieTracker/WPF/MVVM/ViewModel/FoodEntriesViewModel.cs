@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using WPF.Core;
 using WPF.MVVM.Model;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Windows.Documents;
+using System.Collections.Specialized;
+using System.ComponentModel;
 
 namespace WPF.MVVM.ViewModel
 {
@@ -26,9 +26,16 @@ namespace WPF.MVVM.ViewModel
             get { return _foodItems; }
             set
             {
-                _foodItems = value;
-                OnPropertyChanged("TotalCalories");
-                OnPropertyChanged(nameof(CalorieIntakeProgress));
+                if(_foodItems != value )
+                {
+                    _foodItems = value;
+
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(TotalCalories));
+                    OnPropertyChanged(nameof(CalorieIntakeProgress));
+                    OnPropertyChanged(nameof(CalorieIntakeProgressColour));
+                }
+
             }
         }
 
@@ -38,15 +45,7 @@ namespace WPF.MVVM.ViewModel
         /// <returns>
         /// Combined total calories of all food items
         /// </returns>
-        public int TotalCalories
-        {
-            get
-            {
-                if (FoodItems != null)
-                    return FoodItems.Sum(item => item.Calories * item.Count);
-                else return 0;
-            }
-        }
+        public int TotalCalories => FoodItems?.Sum(item => item.Calories * item.Count) ?? 0;
 
 
         /// <summary>
@@ -55,10 +54,7 @@ namespace WPF.MVVM.ViewModel
         /// <returns>
         /// Formated date string
         /// </returns>
-        public string DateString
-        {
-            get { return _date.ToString("dd MMM"); }
-        }
+        public string DateString => _date.ToString("dd MMM");
 
         public DateTime Date
         {
@@ -66,10 +62,9 @@ namespace WPF.MVVM.ViewModel
             set
             {
                 _date = value;
-                OnPropertyChanged("DateString");
+                OnPropertyChanged(nameof(DateString));
             }
         }
-
 
 
         /// <summary>
@@ -78,27 +73,18 @@ namespace WPF.MVVM.ViewModel
         /// <returns>
         /// Total Calories consumed as a percerntage to your maximum daily food intake
         /// </returns>
-        public int CalorieIntakeProgress
+        public int CalorieIntakeProgress => (int)Math.Round((double)(100 * TotalCalories) / 2000);
+
+
+        private static readonly BrushConverter brushConverter = new BrushConverter();
+        public System.Windows.Media.Brush CalorieIntakeProgressColour => CalorieIntakeProgress switch
         {
-            get { return (int)Math.Round((double)(100 * TotalCalories) / 2000); }
-        }
+            > 90 => (Brush)brushConverter.ConvertFrom("#e84118") ?? Brushes.Red,
+            > 75 => (Brush)brushConverter.ConvertFrom("#e1b12c") ?? Brushes.Yellow,
+            >= 0 => (Brush)brushConverter.ConvertFrom("#4cd137") ?? Brushes.Green,
+            _ => (Brush)brushConverter.ConvertFrom("#e84118") ?? Brushes.Red,
+        };
 
-
-        public System.Windows.Media.Brush CalorieIntakeProgressColour
-        {
-            get 
-            {
-                BrushConverter brushConverter = new BrushConverter();
-
-                return CalorieIntakeProgress switch
-                {
-                    > 90 => (Brush)brushConverter.ConvertFrom("#e84118") ?? Brushes.Red,
-                    > 75 => (Brush)brushConverter.ConvertFrom("#e1b12c") ?? Brushes.Yellow,
-                    >= 0 => (Brush)brushConverter.ConvertFrom("#4cd137") ?? Brushes.Green,
-                    _ => (Brush)brushConverter.ConvertFrom("#e84118") ?? Brushes.Red,
-                };
-            }
-        }
 
         /// <summary>
         /// Handles Messages recieved from Mediator
@@ -113,6 +99,7 @@ namespace WPF.MVVM.ViewModel
         {
             if (msg == "TotalCalories")
             {
+                OnPropertyChanged(nameof(FoodItems));
                 OnPropertyChanged(nameof(TotalCalories));
                 OnPropertyChanged(nameof(CalorieIntakeProgress));
                 OnPropertyChanged(nameof(CalorieIntakeProgressColour));
@@ -132,15 +119,14 @@ namespace WPF.MVVM.ViewModel
         /// </param>
         public void RemoveFoodItem(object foodItem)
         {
-            // Check if it contains the food item
-            if (!FoodItems.Contains((FoodItemViewModel)foodItem))
-                return;
-
-            FoodItems.Remove((FoodItemViewModel)foodItem);
-            OnPropertyChanged(nameof(FoodItems));
-            OnPropertyChanged(nameof(TotalCalories));
-            OnPropertyChanged(nameof(CalorieIntakeProgress));
-            OnPropertyChanged(nameof(CalorieIntakeProgressColour));
+            if(foodItem is FoodItemViewModel item)
+            {
+                FoodItems.Remove(item);
+                OnPropertyChanged(nameof(FoodItems));
+                OnPropertyChanged(nameof(TotalCalories));
+                OnPropertyChanged(nameof(CalorieIntakeProgress));
+                OnPropertyChanged(nameof(CalorieIntakeProgressColour));
+            }
         }
 
 
@@ -156,26 +142,13 @@ namespace WPF.MVVM.ViewModel
 
             if (_loader is DateBasedFoodEntryLoader dateBasedLoader)
             {
-                dateBasedLoader.EntryDate = Date; // Change the stored date in the loader
+                dateBasedLoader.EntryDate = Date;
             }
 
             var data = _loader.Load();
 
-            FoodItems = new ObservableCollection<FoodItemViewModel>();
-
-            if (data != null)
-            {
-                foreach (FoodItemModel food in data)
-                {
-                    FoodItems.Add(new FoodItemViewModel(food));
-                }
-            }
-            else
-                FoodItems = new ObservableCollection<FoodItemViewModel>
-                {
-                    new FoodItemViewModel(new FoodItemModel())
-                };
-
+            FoodItems = new ObservableCollection<FoodItemViewModel>(data?.Select(food =>  new FoodItemViewModel(food)) 
+                ?? new[] {new FoodItemViewModel(new FoodItemModel())});
 
             OnPropertyChanged(nameof(FoodItems));
             OnPropertyChanged(nameof(TotalCalories));
@@ -208,7 +181,6 @@ namespace WPF.MVVM.ViewModel
             {
                 FoodItems.Add(new FoodItemViewModel(new FoodItemModel()));
                 OnPropertyChanged(nameof(FoodItems));
-                OnPropertyChanged(nameof(CalorieIntakeProgress));
                 Save();
             });
 
