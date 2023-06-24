@@ -24,5 +24,15 @@ namespace WPF
         {
             InitializeComponent();
         }
+
+        private void DragWindow(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                Window.GetWindow(this).DragMove();
+            }
+        }
     }
+
+
 }

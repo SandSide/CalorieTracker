@@ -7,72 +7,92 @@
         xmlns:viewModel="clr-namespace:WPF.MVVM.ViewModel"
         xmlns:view="clr-namespace:WPF.MVVM.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="650"
-                WindowStyle="None"
-                ResizeMode="NoResize"
-                Background="Transparent"
-                AllowsTransparency="True">
-    
+        Title="MainWindow" Width ="650"
+                           Height="450" 
+                           WindowStyle="None"
+                           ResizeMode="CanResizeWithGrip"
+                           Background="Transparent"
+                           AllowsTransparency="True">
+
     <Window.DataContext>
         <viewModel:MainViewModel/>
     </Window.DataContext>
 
-    <Border Background="#f5f6fa" CornerRadius="0"
-            BorderBrush="#0097e6"
-            BorderThickness=".1">
+    <StackPanel Orientation="Vertical">
 
-        <Grid>
+
+        <Grid MouseLeftButtonDown="DragWindow"
+              Background="#273c75">
+
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150"/>
-                <ColumnDefinition Width="500"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="75"/>
-                <RowDefinition/>
+                <RowDefinition Height="25"/>
             </Grid.RowDefinitions>
-            
-            <TextBlock Text="Calorie Tracker"
+
+        </Grid>
+
+
+        <Border Background="#f5f6fa" CornerRadius="0"
+                BorderBrush="#0097e6"
+                BorderThickness=".1">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="500"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="75"/>
+                    <RowDefinition Height="350"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Calorie Tracker"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"                   
                        Foreground="#192a56"                 
                        FontSize="20"/>
 
-            <StackPanel Grid.Row="1" >
+                <StackPanel Grid.Row="1" >
 
-                <Button Content="Entries"
+                    <Button Content="Entries"
                         Style="{StaticResource MenuButton}"/>
 
-                <Button Content="Staticis"
-                        Style="{StaticResource MenuButton}"/>
-                
-                <Button Content="Settings"
+                    <Button Content="Staticis"
                         Style="{StaticResource MenuButton}"/>
 
-            </StackPanel>
+                    <Button Content="Settings"
+                        Style="{StaticResource MenuButton}"/>
+
+                </StackPanel>
 
 
 
-            <Border Grid.Column="1" Grid.Row="0"
-                    Background="#00a8ff"
+                <Border Grid.Column="1" Grid.Row="0"
+                    Background="#0097e6"
                     CornerRadius="0 0 0 0">
 
-                <TextBlock Text="Entries"
+                    <TextBlock Text="Entries"
                            FontSize="32"    
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"                   
                            Foreground="White"/>
 
-            </Border>
+                </Border>
 
-            <Border Grid.Column="1" Grid.Row="1"
+                <Border Grid.Column="1" Grid.Row="1"
                     Padding="5"
-                    Background="#00a8ff"
+                    Background="#0097e6"
                     CornerRadius="0 0 0 0">
-          
+
                     <ContentControl Content="{Binding CurrentView}"/>
 
-            </Border>
-        </Grid>
-    </Border>
+                </Border>
+            </Grid>
+        </Border>
+    </StackPanel>
 </Window>
