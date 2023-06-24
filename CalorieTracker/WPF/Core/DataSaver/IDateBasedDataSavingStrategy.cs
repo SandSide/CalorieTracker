@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WPF.Core.Data_Saver
+namespace WPF.Core.DataSaver
 {
     internal interface IDateBasedDataSavingStrategy<T> : IDataSavingStrategy<T>
     {

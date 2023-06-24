@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WPF.Core.Data_Saver
+namespace WPF.Core.DataSaver
 {
     internal interface IDataSavingStrategy<T>
     {
-        void Save(T data, string filePath);
+        void Save(T data);
     }
 }

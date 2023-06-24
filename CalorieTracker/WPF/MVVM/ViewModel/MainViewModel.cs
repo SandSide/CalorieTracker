@@ -10,6 +10,7 @@ using System.IO;
 using WPF.Core;
 using WPF.MVVM.Model;
 using WPF.MVVM.View;
+using WPF.Core.DataSaver;
 
 namespace WPF.MVVM.ViewModel
 {
@@ -38,9 +39,10 @@ namespace WPF.MVVM.ViewModel
 		{
 			string tempFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "test.json");
 
-            DateBasedFoodEntriesForDayLoader FoodEntriesLoader = new DateBasedFoodEntriesForDayLoader(DateTime.Today, tempFilePath);
+            var foodEntriesLoader = new DateBasedFoodEntriesForDayLoader(DateTime.Today, tempFilePath);
+			var foodEntriesSavingStrategy = new DateBasedFoodEntriesForDaySavingStrategy(tempFilePath);
 
-            FoodEntryVM = new FoodEntriesViewModel(FoodEntriesLoader);
+            FoodEntryVM = new FoodEntriesViewModel(foodEntriesLoader, foodEntriesSavingStrategy);
 			CurrentView = FoodEntryVM;
         }
     }

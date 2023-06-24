@@ -27,10 +27,8 @@ namespace WPF.Core
         /// <summary>
         /// Loads todays date food entry from file
         /// </summary>
-        /// <param name="filename">
-        /// Filename which contains list of food entries
-        /// </param>
-        public FoodEntriesForDay? Load() 
+        /// <returns> Food Entires for the day</returns>
+        public FoodEntriesForDay Load() 
         {
 
             // Read File
@@ -38,10 +36,10 @@ namespace WPF.Core
             var json = sr.ReadToEnd();
 
             // Convert Entires to list
-            List<FoodEntriesForDay> allFoodEntires = JsonConvert.DeserializeObject<List<FoodEntriesForDay>>(json);
+            List<FoodEntriesForDay>? allFoodEntires = JsonConvert.DeserializeObject<List<FoodEntriesForDay>>(json) ?? null;
 
             // Find food entry for todays date
-            foreach (var day in allFoodEntires)
+            foreach (FoodEntriesForDay day in allFoodEntires)
             {
                 if(day.Date.ToString("dd mm yyyy") == EntryDate.Date.ToString("dd mm yyyy"))
                     return day;
@@ -50,6 +48,5 @@ namespace WPF.Core
 
             return null;
         }
-
     }
 }

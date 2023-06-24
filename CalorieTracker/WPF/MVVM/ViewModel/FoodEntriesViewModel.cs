@@ -8,18 +8,25 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using WPF.Core;
+using WPF.Core.DataConverter;
 using WPF.MVVM.Model;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using WPF.Core.DataSaver;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Globalization;
 
 namespace WPF.MVVM.ViewModel
 {
     internal class FoodEntriesViewModel : ObservableObject
     {
 
+        private IDataLoader<FoodEntriesForDay> _loader;
+        private IDataSavingStrategy<FoodEntriesForDay> _saver;
+        private FoodEntriesForDayConverter _converter;
+
         private ObservableCollection<FoodItemViewModel> _foodItems;
         private DateTime _date;
-        private IDataLoader<FoodEntriesForDay> _loader;
 
         public ObservableCollection<FoodItemViewModel> FoodItems
         {
@@ -106,7 +113,7 @@ namespace WPF.MVVM.ViewModel
             else if (msg == "RemoveFoodItem")
                 RemoveFoodItem(sender);
 
-           // Save();
+            Save();
         }
 
 
@@ -137,6 +144,7 @@ namespace WPF.MVVM.ViewModel
         /// </param>
         public void Load(DateTime date)
         {
+
             Date = date;
 
             if (_loader is DateBasedFoodEntriesForDayLoader dateBasedLoader)
@@ -144,10 +152,21 @@ namespace WPF.MVVM.ViewModel
                 dateBasedLoader.EntryDate = Date;
             }
 
-            var data = _loader.Load();
+            FoodEntriesForDay? data = _loader.Load();
 
-            FoodItems = new ObservableCollection<FoodItemViewModel>(data?.Select(food =>  new FoodItemViewModel(food)) 
-                ?? new[] {new FoodItemViewModel(new FoodItemModel())});
+            if (data != null)
+            {
+                FoodEntriesForDayConverter _converter = new FoodEntriesForDayConverter();
+                var t = _converter.ConvertToFoodItemViewModelCollection(data);
+                FoodItems = new ObservableCollection<FoodItemViewModel>(_converter.ConvertToFoodItemViewModelCollection(data));
+            }
+            else
+            {
+                FoodItems = new ObservableCollection<FoodItemViewModel>()
+                {
+                    new FoodItemViewModel(new FoodItemModel())
+                };
+            }
 
             OnPropertyChanged(nameof(FoodItems));
             OnPropertyChanged(nameof(TotalCalories));
@@ -161,19 +180,25 @@ namespace WPF.MVVM.ViewModel
         /// </summary>
         public void Save()
         {
-            //DataSaver.SaveData("Test.json", FoodItems, _date);
+            FoodEntriesForDay data = _converter.ConvertToFoodEntriesForDay(FoodItems.ToList(), Date);
+            _saver.Save(data);
         }
 
         public RelayCommand AddNewFoodItemCommand { get; set; }
         public RelayCommand LoadNextDayCommand { get; set; }
         public RelayCommand LoadPreviousDayCommand { get; set; }
 
-        public FoodEntriesViewModel(IDataLoader<FoodEntriesForDay> loader)
+        public FoodEntriesViewModel(IDataLoader<FoodEntriesForDay> loader, IDataSavingStrategy<FoodEntriesForDay> saver)
         {
 
             _loader = loader;
+            _saver = saver;
+
+            _converter = new FoodEntriesForDayConverter();
+
 
             Load(DateTime.Today);
+
 
             // Add new Food Item Command
             AddNewFoodItemCommand = new RelayCommand(o =>
@@ -197,6 +222,5 @@ namespace WPF.MVVM.ViewModel
 
             Mediator.Instance.MessageReceived += OnMessageRecieved;
         }
-
     }
 }
