@@ -19,7 +19,7 @@ namespace WPF.MVVM.ViewModel
 
         private ObservableCollection<FoodItemViewModel> _foodItems;
         private DateTime _date;
-        private IDataLoader<List<FoodItemModel>> _loader;
+        private IDataLoader<FoodEntriesForDay> _loader;
 
         public ObservableCollection<FoodItemViewModel> FoodItems
         {
@@ -35,7 +35,6 @@ namespace WPF.MVVM.ViewModel
                     OnPropertyChanged(nameof(CalorieIntakeProgress));
                     OnPropertyChanged(nameof(CalorieIntakeProgressColour));
                 }
-
             }
         }
 
@@ -140,7 +139,7 @@ namespace WPF.MVVM.ViewModel
         {
             Date = date;
 
-            if (_loader is DateBasedFoodEntryLoader dateBasedLoader)
+            if (_loader is DateBasedFoodEntriesForDayLoader dateBasedLoader)
             {
                 dateBasedLoader.EntryDate = Date;
             }
@@ -169,7 +168,7 @@ namespace WPF.MVVM.ViewModel
         public RelayCommand LoadNextDayCommand { get; set; }
         public RelayCommand LoadPreviousDayCommand { get; set; }
 
-        public FoodEntriesViewModel(IDataLoader<List<FoodItemModel>> loader)
+        public FoodEntriesViewModel(IDataLoader<FoodEntriesForDay> loader)
         {
 
             _loader = loader;

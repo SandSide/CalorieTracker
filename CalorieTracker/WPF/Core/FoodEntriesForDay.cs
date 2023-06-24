@@ -7,16 +7,16 @@ using WPF.MVVM.Model;
 
 namespace WPF.Core
 {
-    internal class DaysFoodIntake
+    internal class FoodEntriesForDay
     {
-
         public DateTime Date { get; set; }
-        public List<FoodItemModel> FoodItems { get; set; }
 
-        public DaysFoodIntake(DateTime date, List<FoodItemModel> foodItems)
+        public List<FoodItemModel> FoodEntries { get; set; }
+
+        public FoodEntriesForDay(DateTime date, List<FoodItemModel> foodEntries)
         {
             Date = date;
-            FoodItems = foodItems;
+            FoodEntries = foodEntries;
         }
     }
 }

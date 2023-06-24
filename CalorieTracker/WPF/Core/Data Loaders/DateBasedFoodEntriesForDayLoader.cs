@@ -9,17 +9,16 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using WPF.MVVM.Model;
 using static System.Runtime.InteropServices.JavaScript.JSType;
-using static WPF.Core.DataSaver;
 
 namespace WPF.Core
 {
-    internal class DateBasedFoodEntryLoader : IDataLoader<List<FoodItemModel>>
+    internal class DateBasedFoodEntriesForDayLoader : IDataLoader<FoodEntriesForDay>
     {
 
         public DateTime EntryDate { get; set; }
         public string FilePath { get; set; }
 
-        public DateBasedFoodEntryLoader(DateTime date, string filePath)
+        public DateBasedFoodEntriesForDayLoader(DateTime date, string filePath)
         {
             EntryDate = date;
             FilePath = filePath;
@@ -31,7 +30,7 @@ namespace WPF.Core
         /// <param name="filename">
         /// Filename which contains list of food entries
         /// </param>
-        public List<FoodItemModel>? Load() 
+        public FoodEntriesForDay? Load() 
         {
 
             // Read File
@@ -39,13 +38,13 @@ namespace WPF.Core
             var json = sr.ReadToEnd();
 
             // Convert Entires to list
-            List<DaysFoodIntake> dailyIntakeEntries = JsonConvert.DeserializeObject<List<DaysFoodIntake>>(json);
+            List<FoodEntriesForDay> allFoodEntires = JsonConvert.DeserializeObject<List<FoodEntriesForDay>>(json);
 
             // Find food entry for todays date
-            foreach (var day in dailyIntakeEntries)
+            foreach (var day in allFoodEntires)
             {
                 if(day.Date.ToString("dd mm yyyy") == EntryDate.Date.ToString("dd mm yyyy"))
-                    return day.FoodItems;
+                    return day;
  
             }
 
